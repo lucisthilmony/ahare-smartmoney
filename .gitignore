@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pkl
+*.log
+*.csv
+config.py
+token测试结果.txt
+.DS_Store

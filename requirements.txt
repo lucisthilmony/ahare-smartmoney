@@ -1,0 +1,16 @@
+# A股短线波段操作助手 · 数据层依赖
+# 安装： pip3 install -r requirements.txt
+#
+# ⚠️ pandas 必须精确锁定版本（2026-07-03 起）：
+#   两台机器经 OneDrive 共享 .pkl 缓存，pandas 3.x 写出的 pickle 用 2.3.3 读不了
+#   （StringDtype 序列化格式不兼容），曾导致缓存互相覆盖损坏。
+#   本机(MacBook Pro)系统 Python 3.9 跑不了 pandas 3.x，故全体统一锁 2.3.3。
+#   换机器/重建环境时，跑一次「对齐pandas版本.command」即可。
+flask>=3.0
+flask-cors>=4.0
+pandas==2.3.3
+numpy>=2.0,<3
+matplotlib>=3.9
+requests>=2.31
+tushare>=1.4.6        # 用 Tushare 时需要（推荐）
+akshare>=1.13         # 免费兜底数据源
