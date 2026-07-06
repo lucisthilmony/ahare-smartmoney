@@ -6,3 +6,4 @@ __pycache__/
 config.py
 token测试结果.txt
 .DS_Store
+.base_last_weight.json

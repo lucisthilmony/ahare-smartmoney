@@ -58,7 +58,7 @@ def recommend(cap=None):
     nxt = None                            # 下一个检查点日期（供提示；日历不够长就留空）
     cal2 = P._ts_query("trade_cal", exchange="SSE", start_date=today,
                        end_date=(dt.date.today() + dt.timedelta(days=15)).strftime("%Y%m%d"), is_open="1")
-    fut = sorted(set(cal2["cal_date"].tolist()) - set(days[:-1]))
+    fut = [d for d in sorted(cal2["cal_date"].tolist()) if d > days[-1]]   # 严格今天之后（修正2026-07-06 off-by-one）
     need = cp + 5 - i                     # 距下一检查点还差几个交易日
     if 0 < need <= len(fut):
         nxt = fut[need - 1]
@@ -72,6 +72,27 @@ def recommend(cap=None):
                weight=(BASE_TARGET.get(cap) if cap is not None else None))
     return out
 
+_LASTW = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".base_last_weight.json")
+
+def _weight_alert(weight):
+    """目标权重较上次显示变化≥5pp → 返回醒目提醒（展示辅助；读写失败静默）。"""
+    import json as _json
+    prev = None
+    try:
+        prev = _json.load(open(_LASTW)).get("weight")
+    except Exception:
+        pass
+    if weight is None:      # 手动无参运行不覆盖状态（否则会吞掉次日的调仓提醒）
+        return ""
+    try:
+        _json.dump({"weight": weight, "at": dt.datetime.now().strftime("%Y-%m-%d %H:%M")}, open(_LASTW, "w"))
+    except Exception:
+        pass
+    if prev is None or weight is None or abs(weight - prev) < 5:
+        return ""
+    act = "买入加仓" if weight > prev else "卖出减仓"
+    return f"\n　⚠️ **今日调仓**：目标权重 {prev}% → {weight}%（尾盘{act}至目标）"
+
 def line(cap=None):
     """一行人话，供尾盘信号/日志用。"""
     try:
@@ -82,6 +103,7 @@ def line(cap=None):
         return "🏦 底仓(strong3)：数据不足，按上次持仓不动"
     w = f"目标权重 **{r['weight']}%**" if r["weight"] is not None else "权重看档位(进攻50/标准30/防守10/空仓0%)"
     s = f"🏦 底仓(strong3)：持有 **{r['name']}ETF {r['etf']}**（20日动量{r['ret20']:+.1f}%）｜ {w}"
+    s += _weight_alert(r["weight"])
     if r["changed"]:
         s += f"\n　⚠️ **今日换仓日**：尾盘卖 {r['prev_name']}ETF {r['prev_etf']} → 买 {r['name']}ETF {r['etf']}"
     elif r["is_cp_today"]:
