@@ -14,12 +14,13 @@
 import os, sys, datetime as dt
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import pipeline as P
+import 策略规格 as SPEC   # v6.4：锚点/权重表同源
 
 CODES = [("000300.SH", "沪深300", "510300"),
          ("399006.SZ", "创业板指", "159915"),
          ("000688.SH", "科创50", "588000")]
-ANCHOR = "20240618"          # 相位锚点（预注册不改）：与样本内回测窗口首日对齐
-BASE_TARGET = {60: 50, 40: 30, 20: 10, 0: 0}   # 档位上限% → 底仓目标权重%
+ANCHOR = SPEC.ANCHOR          # 相位锚点（同源自策略规格.py）
+BASE_TARGET = SPEC.BASE_TARGET  # 档位上限% → 底仓目标权重%（同源）
 
 def _ret20_at(di, dref):
     """di: 单指数日线(升序)；dref: 参考日。返回 dref 收盘的近20日涨幅，数据不足返回 None。"""

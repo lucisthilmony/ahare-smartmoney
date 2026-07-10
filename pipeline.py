@@ -507,7 +507,8 @@ def build_with_akshare():
     up_cnt = down_cnt = amt_today = amt_ma20 = None; amt_3d_shrink = False
     try:
         spot = ak.stock_zh_a_spot_em()
-        up_cnt = int((spot["涨跌幅"] > 0).sum()); down_cnt = int((spot["涨跌幅"] < 0).sum())
+        # v6.4：与Tushare路径/回测同口径=阳线家数（收盘>开盘）；此前用涨跌幅，两源同日会给出不同档位
+        up_cnt = int((spot["最新价"] > spot["今开"]).sum()); down_cnt = int((spot["最新价"] < spot["今开"]).sum())
         amt_today = float(spot["成交额"].sum())
     except Exception:
         pass

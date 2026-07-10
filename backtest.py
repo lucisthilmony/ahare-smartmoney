@@ -151,8 +151,10 @@ def prepare(data):
     # 每日广度/量能（用本回测股票池）
     log("计算每日广度/量能…")
     bd = panel.copy()
-    bd["up"] = (bd["close"] > bd["open"]).astype(int)
-    bd["down"] = (bd["close"] < bd["open"]).astype(int)
+    _bm = getattr(__import__("策略规格"), "BREADTH_MODE", "body")
+    _ref = bd["prev_close"] if _bm == "prevclose" else bd["open"]   # v6.4：body=现行口径(阳线家数)；prevclose=待验变体
+    bd["up"] = (bd["close"] > _ref).astype(int)
+    bd["down"] = (bd["close"] < _ref).astype(int)
     day_stat = bd.groupby("trade_date").agg(up_cnt=("up", "sum"), down_cnt=("down", "sum"),
                                             amt=("amount_yuan", "sum")).sort_index()
     day_stat["amt_ma20"] = day_stat["amt"].rolling(20).mean()

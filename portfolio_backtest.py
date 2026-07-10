@@ -22,12 +22,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import config as C
 import pipeline as P
 import backtest as B
+import 策略规格 as SPEC   # v6.4：实盘-回测同源的唯一参数/函数源
 
 # ===== 组合参数（全部来自手册，不新调参）=====
 INIT_CAPITAL = float(getattr(C, "DEFAULT_CAPITAL", 500000))
 RISK_PCT     = float(getattr(C, "RISK_PCT", 0.0075))
-MAX_POS      = 3          # 最多同时持有（手册§5：2–3只，取3）
-MAX_OPEN_DAY = 2          # 每天最多新开（手册§5：1–2笔，取2）
+MAX_POS      = SPEC.MAX_POS          # 最多同时持有
+MAX_OPEN_DAY = SPEC.MAX_OPEN_DAY     # v6.4=1，与实盘执行卡一致（v6.3前回测用2，与实盘不同源）
 HOLD_MAX     = 15         # 时间止损（v5.2 采纳：15日/破MA10）
 TRAIL        = "ma10"
 CAP_20CM     = 0.30       # 创业板+科创板合计敞口上限（§6）
@@ -58,10 +59,10 @@ DIV_TOTAL    = 0.50           # 底仓两腿合计恒为50%（=最高档进攻�
 
 log = B.log
 
-def _fees(mv, side):
+def _fees(mv, side, date=None):
     f = max(COMM_MIN, mv * COMM_RATE)
     if side == "sell":
-        f += mv * STAMP
+        f += mv * (SPEC.stamp_rate(date) if date else STAMP)   # v6.4：2023-08-28前印花税0.1%
     return f
 
 def fetch_idx_series(codes, start, end, cache_name):
@@ -88,7 +89,9 @@ def fetch_idx_series(codes, start, end, cache_name):
 def fetch_sector_idx(start, end):
     return fetch_idx_series(SEC_IDX, start, end, "sector_idx")
 
-def run_portfolio(start, end, tag, base_mode="none", no_satellite=False):
+def run_portfolio(start, end, tag, base_mode="none", no_satellite=False, gate="classic", phase=None):
+    """gate: 'classic'/'codexA'（v6.4原生支持，替代monkeypatch复现）；
+    phase: None=锚点相位（与实盘一致）/ 0-4=相位敏感性实验用覆盖。"""
     data = B.fetch_all(start, end)
     P_ = B.prepare(data)
     frames = P_["frames"]
@@ -119,10 +122,11 @@ def run_portfolio(start, end, tag, base_mode="none", no_satellite=False):
         di = fetch_idx_series({DIV_IDX: "中证红利全收益"}, start, end, "div_idx")[DIV_IDX]
         div_close = dict(zip(di["trade_date"], di["close"]))
 
-    log("生成每日候选（与实盘同源 + 实盘主线门）…")
+    cp_offset = SPEC.checkpoint_offset(win_dates, P._ts_query) if phase is None else int(phase) % 5
+    log(f"生成每日候选（同源门 gate={gate}；换仓相位 offset={cp_offset}{'(锚点)' if phase is None else '(实验覆盖)'}）…")
     cand_by_day = {}
     for d, state, cands in B.daily_candidates(data, P_, date_pos):
-        live = [c for c in cands if B.live_gate(c)]
+        live = [c for c in cands if B.live_gate(c) and SPEC.satellite_gate(c, gate) is True]
         live.sort(key=lambda c: c.get("score", 0), reverse=True)
         cand_by_day[d] = (state, live)
 
@@ -151,8 +155,8 @@ def run_portfolio(start, end, tag, base_mode="none", no_satellite=False):
             pos = positions[ts]; sub = frames[ts]
             px = float(sub["open"].iloc[j]) * (1 - SLIP[pos["board"]])
             mv = pos["shares"] * px
-            cash += mv - _fees(mv, "sell")
-            pos["pnl"] += pos["shares"] * (px - pos["entry"]) - _fees(mv, "sell")
+            cash += mv - _fees(mv, "sell", d)
+            pos["pnl"] += pos["shares"] * (px - pos["entry"]) - _fees(mv, "sell", d)
             pos["shares"] = 0
             _close_trade(closed, pos, d, px, reason)
             del positions[ts]; del pending[ts]
@@ -167,8 +171,8 @@ def run_portfolio(start, end, tag, base_mode="none", no_satellite=False):
                 half = (pos["shares"] // 2) // pos["lot"] * pos["lot"] if pos["lot"] > 1 else pos["shares"] // 2
                 if half > 0:
                     mv = half * pos["target"]
-                    cash += mv - _fees(mv, "sell")
-                    pos["pnl"] += half * (pos["target"] - pos["entry"]) - _fees(mv, "sell")
+                    cash += mv - _fees(mv, "sell", d)
+                    pos["pnl"] += half * (pos["target"] - pos["entry"]) - _fees(mv, "sell", d)
                     pos["shares"] -= half
                     pos["half_done"] = True
 
@@ -182,8 +186,8 @@ def run_portfolio(start, end, tag, base_mode="none", no_satellite=False):
             if hold >= HOLD_MAX:                     # 手册：第15日收盘了结
                 px = cl * (1 - SLIP[pos["board"]])
                 mv = pos["shares"] * px
-                cash += mv - _fees(mv, "sell")
-                pos["pnl"] += pos["shares"] * (px - pos["entry"]) - _fees(mv, "sell")
+                cash += mv - _fees(mv, "sell", d)
+                pos["pnl"] += pos["shares"] * (px - pos["entry"]) - _fees(mv, "sell", d)
                 pos["shares"] = 0
                 _close_trade(closed, pos, d, px, "2R后时间止损" if pos["half_done"] else "时间止损")
                 del positions[ts]; pending.pop(ts, None)
@@ -204,7 +208,7 @@ def run_portfolio(start, end, tag, base_mode="none", no_satellite=False):
             if dd_prev <= DD_HALF:
                 tier_cap = TIER_DOWN.get(tier_cap, 0)
             tgt_w = 0.0 if i < halted_until else BASE_TARGET.get(tier_cap, 0.0)
-            if base_mode in ("strong3", "strongsec", "strong3div") and (i % 5 == 0 or base_inst is None):  # 每5日按20日动量择强
+            if base_mode in ("strong3", "strongsec", "strong3div") and (i % 5 == cp_offset or base_inst is None):  # 检查点=锚点相位（v6.4，此前用窗口起点相位）
                 d_prev = win_dates[i - 1]
                 mom = {nm: idxs[nm]["ret20"].get(d_prev) for nm in idxs}
                 mom = {k: v for k, v in mom.items() if v is not None and not pd.isna(v)}
@@ -288,13 +292,13 @@ def run_portfolio(start, end, tag, base_mode="none", no_satellite=False):
                         continue
                     buy_px = entry * (1 + SLIP[board])
                     cost = shares * buy_px
-                    cash -= cost + _fees(cost, "buy")
+                    cash -= cost + _fees(cost, "buy", d)
                     positions[ts] = dict(ts=ts, code=cd["code"], name=cd["name"], board=board,
                                          ind=cd["ind"], score=cd["score"], sec_rank=cd["sec_rank"],
                                          shares=shares, lot=lot, entry=buy_px, entry_raw=entry,
                                          stop=stop, target=entry + 2 * risk, half_done=False,
                                          entry_i=j, entry_date=d, entry_shares=shares,
-                                         r_amt=equity_prev * r_eff, pnl=-_fees(cost, "buy"))
+                                         r_amt=equity_prev * r_eff, pnl=-_fees(cost, "buy", d))
                     rows[ts] = j
                     opens += 1
 
@@ -451,19 +455,27 @@ def report(curve, trades, kills, win_dates, tag, meta=None):
 if __name__ == "__main__":
     t0 = time.time()
     plain = [a for a in sys.argv[1:] if not a.startswith("--")]
-    base_mode = "none"; no_sat = False
+    base_mode = "none"; no_sat = False; gate = "classic"; phase = None
     for a in sys.argv[1:]:
         if a.startswith("--base="):
             base_mode = a.split("=", 1)[1]
         if a == "--nosat":
             no_sat = True
+        if a.startswith("--gate="):
+            gate = a.split("=", 1)[1]
+        if a.startswith("--phase="):
+            phase = int(a.split("=", 1)[1])
     assert base_mode in ("none", "hs300", "strong3", "strongsec", "strong3div"), f"未知 base_mode: {base_mode}"
     start, end, tag = B.window_args(plain)
     if base_mode != "none":
         tag = f"{tag}_base-{base_mode}"
+    if gate != "classic":
+        tag = f"{tag}_gate-{gate}"
+    if phase is not None:
+        tag = f"{tag}_ph{phase}"
     if no_sat:
         tag = f"{tag}_nosat"
-    log(f"组合级回测窗口 {start} ~ {end}（tag={tag}，底仓={base_mode}，卫星={'关' if no_sat else '开'}）")
-    curve, trades, kills, wd, meta = run_portfolio(start, end, tag, base_mode=base_mode, no_satellite=no_sat)
+    log(f"组合级回测窗口 {start} ~ {end}（tag={tag}，底仓={base_mode}，门={gate}，相位={phase if phase is not None else '锚点'}，卫星={'关' if no_sat else '开'}）")
+    curve, trades, kills, wd, meta = run_portfolio(start, end, tag, base_mode=base_mode, no_satellite=no_sat, gate=gate, phase=phase)
     report(curve, trades, kills, wd, tag, meta)
     log(f"全部完成，用时 {time.time()-t0:.0f}s")

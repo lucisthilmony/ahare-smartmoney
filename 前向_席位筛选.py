@@ -28,15 +28,14 @@ def _n(v, d=0.0):
         return d
 
 def codex_flags(c):
-    """Codex Alpha两个格子的标志（2026-07-03复核：A半真半假、B判为幸运格子；均只记录不执行，2026-10-03评估）。
-    需要 pipeline 候选带 prior60/amt20_yi（2026-07-03起有）；缺字段返回空串。"""
-    if c.get("prior60") is None or c.get("amt20_yi") is None:
+    """A/B格子标志。A门判定委托 策略规格.gate_codexA（v6.4实盘-回测同源）；B格仅记录用。缺字段返回空串。"""
+    ga = __import__("策略规格").gate_codexA(c)
+    if ga is None:
         return "", ""
-    sec, rs, prior, amt, score = (_n(c.get("sec_rank"), 999), _n(c.get("rs")),
-                                  _n(c.get("prior60")), _n(c.get("amt20_yi")), _n(c.get("score")))
-    a = "Y" if (sec <= 5 and rs > 0 and prior < 0 and 2 <= amt < 5) else "N"
+    sec, prior, amt, score = (_n(c.get("sec_rank"), 999), _n(c.get("prior60")),
+                              _n(c.get("amt20_yi", c.get("amt20"))), _n(c.get("score")))
     b = "Y" if (score >= 75 and sec <= 10 and 60 <= prior < 100 and amt >= 5) else "N"
-    return a, b
+    return ("Y" if ga else "N"), b
 
 def log(m): print(f"[{dt.datetime.now():%H:%M:%S}] {m}", flush=True)
 
