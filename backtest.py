@@ -121,8 +121,21 @@ def prepare(data):
     panel["body_pct"] = (panel["close"] - panel["open"]) / panel["open"]
 
     # 行业合成指数（等权归一）→ 每日 gate 与 strength
-    log("计算行业合成指数…")
-    panel["ind"] = panel["ts_code"].map(ind_map)
+    log("计算行业合成指数（v6.4.1时点口径：申万L2成分含进出日期，替代静态当前行业）…")
+    _pit = __import__("时点数据"); _pitdb = _pit.load()
+    import numpy as _np
+    _ind_col = _np.full(len(panel), "其他", dtype=object)
+    _pos0 = 0
+    for _code, _sub in panel.groupby("ts_code", sort=False):
+        _ivs = _pitdb["ind"].get(_code)
+        if _ivs:
+            _dates = _sub["trade_date"].values
+            _seg = _np.full(len(_dates), "其他", dtype=object)
+            for _nm, _a, _b in _ivs:
+                _m = (_dates >= _a) & (_dates <= _b)
+                _seg[_m] = _nm
+            _ind_col[_sub.index.values] = _seg
+    panel["ind"] = _ind_col
     ind_strength = {}  # (ind, date) -> strength ; ind_ok via >0 of (idx>ma20)
     ind_gate = {}
     sec_ret = {}       # date -> {ind: 20日涨幅}
@@ -130,7 +143,8 @@ def prepare(data):
         piv = sub.pivot_table(index="trade_date", columns="ts_code", values="close").sort_index()
         if piv.shape[0] < 25:
             continue
-        norm = piv.div(piv.iloc[0])
+        _first = piv.apply(lambda col: col.loc[col.first_valid_index()] if col.first_valid_index() is not None else _np.nan)
+        norm = piv.div(_first)   # v6.4.1：按各股首个有效值归一（时点成分中途加入的股票也计入合成）
         series = norm.mean(axis=1)
         ma20 = series.rolling(20).mean()
         ret20 = series / series.shift(20) - 1
@@ -289,7 +303,8 @@ def daily_candidates(data, P_, date_pos=None):
         cands = []
         for _, r0 in pf.iterrows():
             code = r0["ts_code"]; board = P_["board_map"].get(code)
-            if board is None or code in P_["st_set"]: continue
+            if board is None: continue
+            if __import__("时点数据").st_at(code, d): continue   # v6.4.1：时点ST（替代当前名回溯）
             ld = str(P_["list_map"].get(code, "19900101"))[:8]
             try:  # 次新过滤：上市不满约60交易日(≈96自然日)不做（手册§1；旧版漏了这条）
                 if (d_dt - dt.datetime.strptime(ld, "%Y%m%d").date()).days < int(C.MIN_LIST_DAYS * 1.6):
@@ -301,7 +316,7 @@ def daily_candidates(data, P_, date_pos=None):
             sub = frames[code]; p = date_pos[code].get(d)
             if p is None or p < 25: continue
             di_slice = sub.iloc[:p + 1]
-            ind = P_["ind_map"].get(code, "其他")
+            ind = r0["ind"] if isinstance(r0.get("ind"), str) else "其他"   # v6.4.1：时点行业（决策日当时的归属）
             ind_ok = P_["ind_gate"].get((ind, d), True) if C.SCREEN["use_industry_gate"] else True
             cand = P.screen_one(di_slice, board, C.SCREEN, industry_ok=ind_ok)
             if not cand: continue

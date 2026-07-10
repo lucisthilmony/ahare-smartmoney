@@ -339,7 +339,19 @@ def build_with_tushare():
     cutoff = (dt.date.today() - dt.timedelta(days=int(C.MIN_LIST_DAYS * 1.6))).strftime("%Y%m%d")
     basic = basic[basic["list_date"] <= cutoff]
     name_map = dict(zip(basic["ts_code"], basic["name"]))
-    ind_map = dict(zip(basic["ts_code"], basic["industry"].fillna("其他")))
+    # v6.4.1：行业改用申万L2时点成分的"当日值"（与回测同分类源）；缓存超7天自动重建；无归属回落静态行业
+    try:
+        _pit = __import__("时点数据"); _db = _pit.load()
+        import datetime as _dt
+        if (_dt.datetime.now() - _dt.datetime.strptime(_db["pulled_at"], "%Y-%m-%d %H:%M")).days > 7:
+            _db = _pit.load(refresh=True)
+        _today = _dt.date.today().strftime("%Y%m%d")
+        _static = dict(zip(basic["ts_code"], basic["industry"].fillna("其他")))
+        ind_map = {ts: (_pit.ind_at(ts, _today) or _static.get(ts, "其他")) for ts in basic["ts_code"]}
+        print("[ok] 行业分类=申万L2时点成分（%s拉取）" % _db["pulled_at"])
+    except Exception as _e:
+        print("[warn] 时点行业不可用，回落静态行业：", str(_e)[:60])
+        ind_map = dict(zip(basic["ts_code"], basic["industry"].fillna("其他")))
     board_map = dict(zip(basic["ts_code"], basic["board"]))
     keep = set(basic["ts_code"])
 
