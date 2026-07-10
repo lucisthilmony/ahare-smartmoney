@@ -63,19 +63,31 @@ def process_stream(stream, st, today, cands, can_open):
     pe = s.get("pending_entry")
     if pe:
         bars = daily_bars(pe["code"], pe["decide_date"])
-        s["pending_entry"] = None
-        if bars is not None and len(bars) >= 2:
+        if bars is None or len(bars) < 2:
+            pe["tries"] = pe.get("tries", 0) + 1        # 次日停牌/无数据：重试最多3天（审查项：停牌处理）
+            if pe["tries"] >= 3:
+                _event(stream, pe, "停牌放弃"); s["pending_entry"] = None
+        else:
+            s["pending_entry"] = None
             r0, r1 = bars.iloc[0], bars.iloc[1]
             gap = C.BOARDS[pe["board"]]["gap"]
-            if r0["close"] and r1["open"] / r0["close"] - 1 <= gap:
+            thr = P.limit_up_thr(pe["board"], str(r1["trade_date"]))
+            if r0["close"] and r1["close"] / r0["close"] - 1 >= thr - 0.003:
+                _event(stream, pe, "涨停未成交")          # 审查项：收盘涨停=按不可成交处理，不入场
+            elif r0["close"] and r1["open"] / r0["close"] - 1 <= gap:
                 entry = float(r1["close"])
                 stop = float(pe["stop_price"])
                 if entry > stop:
+                    other = "C" if stream == "A" else "A"
+                    ov = pe["code"] in ({p["code"] for p in st[other]["open"]}
+                                        | ({st[other]["pending_entry"]["code"]} if st[other].get("pending_entry") else set()))
                     s["open"].append(dict(code=pe["code"], name=pe["name"], board=pe["board"],
                                           entry=entry, stop=stop, target=entry + 2 * (entry - stop),
                                           entry_date=str(r1["trade_date"]), half=False, hold=0,
-                                          pnl_r=0.0))
-                    log(f"  [{stream}] 影子入场 {pe['name']} @{entry:.2f}")
+                                          overlap=("Y" if ov else "N"), pnl_r=0.0))
+                    log(f"  [{stream}] 影子入场 {pe['name']} @{entry:.2f}" + ("（与另一流重叠）" if ov else ""))
+            else:
+                _event(stream, pe, "高开放弃")
     # 2) 持仓出场（与回测simulate同规则；pending_exit=次日开盘卖）
     for pos in list(s["open"]):
         bars = daily_bars(pos["code"], pos["entry_date"])
@@ -116,6 +128,16 @@ def _ma10(code, upto):
     bars = bars[bars["trade_date"] <= upto]
     return float(bars["close"].tail(10).mean()) if len(bars) >= 10 else None
 
+EVENTS = os.path.join(HERE, "影子事件.csv")
+
+def _event(stream, pe, kind):
+    """不可成交类事件（涨停未成交/停牌放弃/高开放弃）——评估可达性偏差用。"""
+    row = pd.DataFrame([{"流": stream, "决策日": pe.get("decide_date"), "代码": pe.get("code"),
+                         "名称": pe.get("name"), "事件": kind}])
+    row.to_csv(EVENTS, mode="a" if os.path.exists(EVENTS) else "w",
+               header=not os.path.exists(EVENTS), index=False, encoding="utf-8-sig")
+    log(f"  [{stream}] {kind}: {pe.get('name')}")
+
 def _close(stream, pos, date, px, reason):
     cost = cost_frac(pos["board"], date)
     risk = pos["entry"] - pos["stop"]
@@ -126,7 +148,8 @@ def _close(stream, pos, date, px, reason):
     r = (gross - pos["entry"] * cost) / risk if risk > 0 else 0.0
     append_trade({"流": stream, "开仓日": pos["entry_date"], "代码": pos["code"], "名称": pos["name"],
                   "入场": round(pos["entry"], 2), "止损": round(pos["stop"], 2),
-                  "平仓日": date, "平仓价": round(px, 2), "原因": reason, "R": round(r, 3)})
+                  "平仓日": date, "平仓价": round(px, 2), "原因": reason, "R": round(r, 3),
+                  "重叠": pos.get("overlap", "")})
     log(f"  [{stream}] 影子平仓 {pos['name']} {reason} R={r:+.2f}")
 
 def main():

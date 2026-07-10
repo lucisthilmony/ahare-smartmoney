@@ -149,6 +149,20 @@ def main():
             + "\n\n👉 **你手动下单**；14:40–14:55 点买前再瞄一眼分时，没尾盘跳水再确认。")
     if len(ok) > 1:
         body += "\n（其余过门备选：%s）" % "、".join(c.get("name", "") for c in ok[1:4])
+    # v6.4.1审查项：保存执行卡14:40快照（14:40可成交价，供评估"影子按收盘 vs 实际尾盘价"的滑点差）
+    try:
+        import csv as _csv
+        _f = os.path.join(os.path.dirname(os.path.abspath(__file__)), "执行卡快照.csv")
+        _new = not os.path.exists(_f)
+        with open(_f, "a", newline="", encoding="utf-8-sig") as _fh:
+            _w = _csv.writer(_fh)
+            if _new:
+                _w.writerow(["日期", "时间", "代码", "名称", "1440价", "当日涨幅%", "止损价", "总闸"])
+            _w.writerow([dt.date.today().strftime("%Y%m%d"), dt.datetime.now().strftime("%H:%M"),
+                         p.get("code"), p.get("name"), px,
+                         r.get("chg_pct"), p.get("stop_price"), gtxt])
+    except Exception as _e:
+        print("[warn] 快照写入失败：", _e)
     post_discord(body + tail)
 
 
