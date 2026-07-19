@@ -60,9 +60,76 @@ class ShadowLedgerTest(unittest.TestCase):
         # 损坏件被隔离留证
         corrupt = [x for x in os.listdir(self.tmp.name) if ".corrupt-" in x]
         self.assertEqual(len(corrupt), 1)
-        # 下一次运行正常继续
+        # 复审二轮(0719)契约：恢复后写入持久锁，未人工确认前每次运行都停
+        with open(self.paths["STATE"], encoding="utf-8") as f:
+            self.assertIn("recovery_required", json.load(f))
+        with self.assertRaises(RuntimeError):
+            shadow.load_state()
+        # 人工确认（--confirm-recovery）解锁后才能继续
+        shadow.confirm_recovery()
         out = shadow.load_state()
         self.assertEqual(out["last_run"], "20260701")
+        self.assertNotIn("recovery_required", out)
+
+    def test_rerun_with_existing_snapshot_halts_on_actual_divergence(self):
+        """复审二轮(0719)：补跑时既有快照actual与重算不一致→停止，不写NAV不推进last_run。"""
+        st = ledger.ensure_state({}, 500000)
+        with open(self.paths["STATE"], "w", encoding="utf-8") as f:
+            json.dump(st, f)
+        cands = [
+            {"code": "600001", "name": "甲", "score": 99, "sec_rank": 1, "rs": 1, "prior60": -1,
+             "amt20_yi": 3, "board": "main", "stop_price": 9.0, "close": 10.0},
+            {"code": "600002", "name": "乙", "score": 80, "sec_rank": 2, "rs": 1, "prior60": -1,
+             "amt20_yi": 3, "board": "main", "stop_price": 9.0, "close": 10.0},
+        ]
+        raw = ('window.STRATEGY_DATA = {"data_date": "2026-07-02", "state": {"cap": 40, "can_open": true},'
+               ' "base": {}, "candidates": ' + json.dumps(cands, ensure_ascii=False) + '};')
+        datapath = os.path.join(self.tmp.name, "data.js")
+        with open(datapath, "w", encoding="utf-8") as f:
+            f.write(raw)
+        d = json.loads(raw[raw.find("{"):raw.rfind("}") + 1])
+        # 预先落盘一份"actual=600001"的快照（模拟上次运行在保存状态前崩溃、但状态已含600001持仓→重算将排600002）
+        actions0 = {k: {"queued_code": ("600001" if k == "A" else None), "queued_name": "甲",
+                        "skip_reason": "queued", "held_excluded": [], "eligible_after_exclusion": 2}
+                    for k in ("A", "C", "R")}
+        shadow.write_decision_snapshot("20260702", d, raw, actions0)
+        st["A"]["open"] = [{"code": "600001", "shares": 100, "entry_date": "20260701",
+                            "entry": 10.0, "stop": 9.0, "target": 12.0, "half": False, "hold": 0}]
+        with open(self.paths["STATE"], "w", encoding="utf-8") as f:
+            json.dump(st, f)
+        bars = pd.DataFrame([{"trade_date": "20260702", "open": 10, "high": 10.5, "low": 9.9, "close": 10.2}])
+        with mock.patch.object(shadow.C, "DATA_JS_PATH", datapath), \
+             mock.patch.object(shadow, "daily_bars", return_value=bars), \
+             mock.patch.object(shadow.P, "_recent_trade_dates", return_value=["20260702"]):
+            shadow.main(today="20260702")
+        self.assertFalse(os.path.exists(self.paths["NAV"]))          # 背离→未写NAV
+        with open(self.paths["STATE"], encoding="utf-8") as f:
+            self.assertNotEqual(json.load(f).get("last_run"), "20260702")   # 未推进
+
+    def test_held_stock_without_today_bar_marks_stale_and_logs_event(self):
+        """复审二轮(0719)：个股持仓当日无K线→NAV照记但stale_px_codes显式标记+事件留痕。"""
+        st = ledger.ensure_state({}, 500000)
+        st["A"]["open"] = [{"code": "600001", "name": "甲", "board": "main", "shares": 100,
+                            "entry_date": "20260701", "entry": 10.0, "stop": 9.0, "target": 12.0,
+                            "half": False, "hold": 0, "last_px": 10.0, "entry_shares": 100,
+                            "cost_basis": 1000.0, "buy_px": 10.0, "actual_risk_amt": 100.0}]
+        with open(self.paths["STATE"], "w", encoding="utf-8") as f:
+            json.dump(st, f)
+        raw = ('window.STRATEGY_DATA = {"data_date": "2026-07-02", "state": {"cap": 0, "can_open": false},'
+               ' "base": {}, "candidates": []};')
+        datapath = os.path.join(self.tmp.name, "data.js")
+        with open(datapath, "w", encoding="utf-8") as f:
+            f.write(raw)
+        bars_no_today = pd.DataFrame([{"trade_date": "20260701", "open": 10, "high": 10.2,
+                                       "low": 9.9, "close": 10.0}])
+        with mock.patch.object(shadow.C, "DATA_JS_PATH", datapath), \
+             mock.patch.object(shadow, "daily_bars", return_value=bars_no_today), \
+             mock.patch.object(shadow.P, "_recent_trade_dates", return_value=["20260702"]):
+            shadow.main(today="20260702")
+        nav = pd.read_csv(self.paths["NAV"], dtype=str)
+        self.assertIn("600001", str(nav.iloc[-1]["stale_px_codes"]))   # 显式标记
+        events = pd.read_csv(self.paths["EVENTS"])
+        self.assertIn("当日无行情-停牌沿用旧价", set(events["事件"]))
 
     def test_save_state_never_rotates_corrupt_primary_into_backup(self):
         """复审修复(0719)：损坏主文件绝不覆盖好备份。"""

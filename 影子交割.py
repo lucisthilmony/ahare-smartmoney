@@ -49,8 +49,15 @@ def load_state():
     try:
         with open(STATE, encoding="utf-8") as f:
             st = json.load(f)
+        if st.get("recovery_required"):     # 复审二轮(0719)：恢复后必须人工确认，未确认前每次运行都停
+            raise RuntimeError(
+                "⛔ recovery_required 锁存在（%s 从备份恢复）。请核对：①state.last_run=%s 与 前向影子净值.csv 末行一致 "
+                "②影子交割.csv 无晚于该日的平仓 ③持仓与快照吻合；确认后运行 `影子交割.py --confirm-recovery` 解锁。"
+                % (st["recovery_required"].get("at"), st.get("last_run")))
         return LEDGER.ensure_state(st, INIT_CAPITAL)
     except Exception as e_main:
+        if "recovery_required" in str(e_main):
+            raise
         try:
             with open(STATE + ".bak", encoding="utf-8") as f:
                 bak_st = json.load(f)
@@ -60,14 +67,16 @@ def load_state():
         # 复审修复(0719)：主损坏→①隔离损坏件留证 ②从.bak原子恢复主文件（不动.bak）③今日停跑待核对
         quarantine = STATE + ".corrupt-" + dt.datetime.now().strftime("%Y%m%d%H%M%S")
         os.replace(STATE, quarantine)
+        bak_st["recovery_required"] = {"at": dt.datetime.now().strftime("%Y-%m-%d %H:%M"),
+                                       "quarantine": os.path.basename(quarantine)}   # 持久锁：自动续跑被禁止
         tmp = STATE + ".restore.tmp"
-        with open(STATE + ".bak", "rb") as src, open(tmp, "wb") as dst:
-            dst.write(src.read()); dst.flush(); os.fsync(dst.fileno())
+        with open(tmp, "w", encoding="utf-8") as dst:
+            json.dump(bak_st, dst, ensure_ascii=False, indent=1); dst.flush(); os.fsync(dst.fileno())
         os.replace(tmp, STATE)
         raise RuntimeError(
             f"⚠️ 主状态损坏（已隔离为 {os.path.basename(quarantine)}），已从 .bak 原子恢复主文件，"
-            f".bak 未被改动。恢复点 last_run={bak_st.get('last_run')}。今日停止执行，"
-            f"请核对恢复点与交割表一致后，下一交易日自动续跑。")
+            f".bak 未被改动。恢复点 last_run={bak_st.get('last_run')}。已写入 recovery_required 持久锁——"
+            f"核对后运行 `影子交割.py --confirm-recovery` 解锁，未解锁前每日任务都会停跑。")
 
 def save_state(st):
     if os.path.exists(STATE):
@@ -437,7 +446,7 @@ def rebalance_base_accounts(st, base, today):
                    "股数": t["shares"], "价格": round(t["price"], 4), "费用": round(t["fee"], 2)}
             upsert_csv(row, BASE_TRADES, ("账户", "日期", "方向", "代码"))
 
-def write_nav(st, state, base, today):
+def write_nav(st, state, base, today, stale_codes=None):
     b = LEDGER.snapshot_account(st["accounts"]["base"], [], INIT_CAPITAL)
     a = LEDGER.snapshot_account(st["accounts"]["A"], st["A"]["open"], INIT_CAPITAL)
     c = LEDGER.snapshot_account(st["accounts"]["C"], st["C"]["open"], INIT_CAPITAL)
@@ -472,8 +481,44 @@ def write_nav(st, state, base, today):
         "R_cum_R": round(float(st["R"].get("cum_r", 0)), 4),
         "R_cum_actual_R": round(float(st["R"].get("cum_actual_r", 0)), 4),
         "accounting_start": st.get("accounting_start"), "state_version": st.get("state_version"),
+        "stale_px_codes": "|".join(stale_codes or []),   # 复审二轮(0719)：停牌沿用旧价的持仓，显式可见
     }
     upsert_csv(row, NAV, ("date",))
+
+def _read_snapshot(today):
+    if not os.path.exists(DECISIONS):
+        return {}
+    with open(DECISIONS, encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                obj = json.loads(line)
+                if obj.get("date") == today:
+                    return obj
+    return {}
+
+def confirm_recovery():
+    """人工核对后解锁 recovery_required（先做自动一致性检查并打印，仍需人来跑本命令=确认）。"""
+    with open(STATE, encoding="utf-8") as f:
+        st = json.load(f)
+    lock = st.get("recovery_required")
+    if not lock:
+        print("无 recovery_required 锁，无需解锁。"); return
+    last = st.get("last_run")
+    problems = []
+    if os.path.exists(TRADES):
+        t = pd.read_csv(TRADES, dtype=str)
+        late = t[t["平仓日"].astype(str) > str(last or "")]
+        if len(late):
+            problems.append(f"交割表存在晚于恢复点({last})的平仓 {len(late)} 笔——存在重放/丢单风险，请先人工比对")
+    if os.path.exists(NAV):
+        n = pd.read_csv(NAV, dtype=str)
+        if len(n) and str(n.iloc[-1]["date"]) != str(last):
+            problems.append(f"NAV末行({n.iloc[-1]['date']})与恢复点last_run({last})不一致")
+    for msg in problems:
+        print("⚠️", msg)
+    print(("检查通过。" if not problems else "以上告警请确认已人工处理。") + " 解锁 recovery_required。")
+    st.pop("recovery_required", None)
+    save_state(st)
 
 def main(today=None):
     today = today or dt.date.today().strftime("%Y%m%d")   # 可注入：测试/补跑用
@@ -517,6 +562,18 @@ def main(today=None):
             upsert_csv({"流": "base", "决策日": today, "代码": c, "名称": "底仓ETF", "事件": "行情缺失-失败关闭"},
                        EVENTS, ("流", "决策日", "代码", "事件"))
         return
+    stale_codes = []
+    # 复审二轮(0719)：个股持仓预检——当日无K线（data.js已确认今日全市场数据存在→视为停牌）
+    # 允许沿用旧价标记，但必须显式：事件表留痕 + NAV行stale_px_codes列。API失败则中止（QuoteAPIError冒泡）。
+    for stream in ("A", "C", "R"):
+        for pos in st[stream]["open"]:
+            bars = daily_bars(pos["code"], pos["entry_date"])
+            if bars is None or today not in set(bars["trade_date"].astype(str)):
+                stale_codes.append(pos["code"])
+                upsert_csv({"流": stream, "决策日": today, "代码": pos["code"], "名称": pos.get("name", ""),
+                            "事件": "当日无行情-停牌沿用旧价"}, EVENTS, ("流", "决策日", "代码", "事件"))
+    if stale_codes:
+        log(f"⚠️ 个股当日无行情(停牌?)：{stale_codes}——按旧价标记并显式记录")
     # 时间顺序与组合回测一致：已有仓先出场 → 底仓调仓 → 昨日信号尾盘入场 → 今日信号排队。
     for stream in ("A", "C", "R"):
         _update_positions(stream, st, today)
@@ -527,18 +584,32 @@ def main(today=None):
         actions[stream] = _queue_new_entry(stream, st, today, cands,
                                            bool(state.get("can_open")), state.get("cap", 0))
     try:
-        write_decision_snapshot(today, d, txt, actions, skip_write=snapshot_done)
+        if snapshot_done:
+            # 复审二轮(0719)：补跑路径必须与既有快照的actual一致，否则说明状态已漂移——停止，禁止带病记账
+            prior = _read_snapshot(today)
+            for sname in ("A", "C", "R"):
+                old_q = ((prior.get("decisions", {}).get(sname, {}) or {}).get("actual") or {}).get("queued_code")
+                new_q = (actions.get(sname) or {}).get("queued_code")
+                if old_q != new_q:
+                    log(f"⛔ 补跑背离：快照[{sname}]actual={old_q} 而本次重算={new_q}——状态漂移，停止执行，"
+                        f"请人工核对 .shadow_state.json 与快照后处理")
+                    return
+        else:
+            write_decision_snapshot(today, d, txt, actions)
     except Exception as e:
         log(f"影子决策快照失败：{e}"); return
     try:
         LEDGER.validate_state(st)
     except Exception as e:
         log(str(e)); return
-    write_nav(st, state, base, today)
+    write_nav(st, state, base, today, stale_codes)
     st["last_run"] = today
     save_state(st)
     log(f"影子执行完成：A流{len(st['A']['open'])} C流{len(st['C']['open'])} "
         f"R流{len(st['R']['open'])}；核心四账户+R研究账户净值已记账")
 
 if __name__ == "__main__":
-    main()
+    if "--confirm-recovery" in sys.argv:
+        confirm_recovery()
+    else:
+        main()
