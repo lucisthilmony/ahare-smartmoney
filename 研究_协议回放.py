@@ -170,7 +170,10 @@ if __name__ == "__main__":
     print("\n== 消融（V12参数）==")
     run(f, pe, use_a=False, use_b=False, label="CORE only")
     run(f, pe, lock=True, minhist=750, use_b=False, label="CORE+A")
-    run(f, pe, lock=True, minhist=750, use_a=False, label="CORE+B")
+    h13, ev13 = run(f, pe, lock=True, minhist=750, use_a=False, label="V13(=CORE+B)")
+    frz = (h13.dd <= -0.08)
+    eps = int(((frz.astype(int).diff() == 1) | (frz & ~frz.shift(1, fill_value=False))).sum())
+    print(f"  V13精确口径: -8%一级冻结 {eps}段/{frz.sum()}个交易日 (最深{h13.dd.min()*100:.1f}%) | -15%/-20%熔断 0次")
     hfull, ev = res["V12(锁+750)"]
     avgp = hfull.pos.mean()
     run(f, pe, static=round(avgp, 2), label=f"STATIC{avgp*100:.0f}%")
