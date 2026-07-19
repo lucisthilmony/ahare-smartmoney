@@ -32,6 +32,7 @@ NAV = os.path.join(HERE, "前向影子净值.csv")
 EVENTS = os.path.join(HERE, "影子事件.csv")
 BASE_TRADES = os.path.join(HERE, "影子底仓成交.csv")
 DECISIONS = os.path.join(HERE, "影子决策快照.jsonl")
+COMMIT_MARK = os.path.join(HERE, ".shadow_commit_pending.json")   # 半提交检测标记（复审四轮）
 HOLD_MAX, MAX_POS = 15, SPEC.MAX_POS
 INIT_CAPITAL = float(getattr(C, "DEFAULT_CAPITAL", 500000))
 RISK_PCT = float(getattr(C, "RISK_PCT", 0.0075))
@@ -543,6 +544,16 @@ def confirm_recovery(force=False):
     return True
 
 def main(today=None):
+    if os.path.exists(COMMIT_MARK):
+        try:
+            with open(COMMIT_MARK, encoding="utf-8") as f:
+                mk = json.load(f)
+        except Exception:
+            mk = {}
+        log(f"⛔ 检测到上次提交未完成（COMMIT_MARK {mk.get('date')} {mk.get('at')}）——磁盘可能半提交。"
+            f"请逐一核对：①影子底仓成交.csv ②影子事件.csv ③影子决策快照.jsonl ④前向影子净值.csv ⑤.shadow_state.json，"
+            f"与该日预期一致后删除 {os.path.basename(COMMIT_MARK)}，幂等补跑会去重。未删除前每日停跑。")
+        return
     _discard_staged()   # 复审三轮：清理可能的残留暂存
     today = today or dt.date.today().strftime("%Y%m%d")   # 可注入：测试/补跑用
     if today not in set(P._recent_trade_dates(8)):
@@ -626,15 +637,23 @@ def main(today=None):
     except Exception as e:
         log(str(e)); _discard_staged(); return
     # ---- 提交点：以上全部闸门通过后才允许触盘 ----
+    # 复审四轮(0719)如实声明：提交阶段是多文件顺序写、非原子事务；故障依赖幂等补跑。
+    # COMMIT_MARK=半提交检测：提交前落标记、五步全成后删除；下次运行见标记即停，强制五类产物核对。
+    with open(COMMIT_MARK, "w", encoding="utf-8") as f:
+        json.dump({"date": today, "at": dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}, f)
+        f.flush(); os.fsync(f.fileno())
     try:
         _flush_staged()
         if not snapshot_done:
             write_decision_snapshot(today, d, txt, actions)
+        write_nav(st, state, base, today, stale_codes)
+        st["last_run"] = today
+        save_state(st)
     except Exception as e:
-        log(f"提交失败：{e}"); return
-    write_nav(st, state, base, today, stale_codes)
-    st["last_run"] = today
-    save_state(st)
+        log(f"⛔ 提交失败（COMMIT_MARK保留）：{e}——磁盘可能处于半提交。请核对五类产物"
+            f"（底仓成交/事件/快照/NAV/状态）后删除 {os.path.basename(COMMIT_MARK)} 再补跑。")
+        return
+    os.remove(COMMIT_MARK)
     log(f"影子执行完成：A流{len(st['A']['open'])} C流{len(st['C']['open'])} "
         f"R流{len(st['R']['open'])}；核心四账户+R研究账户净值已记账")
 

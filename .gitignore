@@ -10,3 +10,4 @@ token测试结果.txt
 .shadow_state.json.bak
 .shadow_state.json*
 *.jsonl
+.shadow_commit_pending.json

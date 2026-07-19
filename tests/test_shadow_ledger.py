@@ -23,6 +23,7 @@ class ShadowLedgerTest(unittest.TestCase):
             "BASE_TRADES": os.path.join(self.tmp.name, "base_trades.csv"),
             "DECISIONS": os.path.join(self.tmp.name, "decisions.jsonl"),
             "STATE": os.path.join(self.tmp.name, "state.json"),
+            "COMMIT_MARK": os.path.join(self.tmp.name, "commit_pending.json"),
         }
         self.patchers = [mock.patch.object(shadow, k, v) for k, v in self.paths.items()]
         for p in self.patchers:
@@ -210,12 +211,41 @@ class ShadowLedgerTest(unittest.TestCase):
         pd.DataFrame([{"流": "A", "开仓日": "20260625", "代码": "600001", "名称": "甲",
                        "平仓日": "20260715", "R": 1.0}]).to_csv(self.paths["TRADES"], index=False,
                                                               encoding="utf-8-sig")
-        before = open(self.paths["STATE"], encoding="utf-8").read()
+        with open(self.paths["STATE"], encoding="utf-8") as f:
+            before = f.read()
         self.assertFalse(shadow.confirm_recovery())                  # 不解锁
-        self.assertEqual(open(self.paths["STATE"], encoding="utf-8").read(), before)  # 状态未动
+        with open(self.paths["STATE"], encoding="utf-8") as f:
+            self.assertEqual(f.read(), before)                       # 状态未动
         self.assertTrue(shadow.confirm_recovery(force=True))         # 人工确认后强制解锁
         with open(self.paths["STATE"], encoding="utf-8") as f:
             self.assertNotIn("recovery_required", json.load(f))
+
+    def test_commit_marker_blocks_next_run_until_cleared(self):
+        """复审四轮(0719)：提交中途故障→COMMIT_MARK保留→下次运行停跑；删除后可继续。"""
+        st = ledger.ensure_state({}, 500000)
+        with open(self.paths["STATE"], "w", encoding="utf-8") as f:
+            json.dump(st, f)
+        raw = ('window.STRATEGY_DATA = {"data_date": "2026-07-02", "state": {"cap": 0, "can_open": false},'
+               ' "base": {}, "candidates": []};')
+        datapath = os.path.join(self.tmp.name, "data.js")
+        with open(datapath, "w", encoding="utf-8") as f:
+            f.write(raw)
+        with mock.patch.object(shadow.C, "DATA_JS_PATH", datapath), \
+             mock.patch.object(shadow.P, "_recent_trade_dates", return_value=["20260702"]):
+            # 注入：NAV写入失败 → COMMIT_MARK应保留、last_run不推进
+            with mock.patch.object(shadow, "write_nav", side_effect=OSError("disk full")):
+                shadow.main(today="20260702")
+            self.assertTrue(os.path.exists(shadow.COMMIT_MARK))
+            with open(self.paths["STATE"], encoding="utf-8") as f:
+                self.assertNotEqual(json.load(f).get("last_run"), "20260702")
+            # 标记存在→下次运行直接停（不产生NAV）
+            shadow.main(today="20260702")
+            self.assertFalse(os.path.exists(self.paths["NAV"]))
+            # 人工核对后删除标记→幂等补跑成功
+            os.remove(shadow.COMMIT_MARK)
+            shadow.main(today="20260702")
+        self.assertTrue(os.path.exists(self.paths["NAV"]))
+        self.assertFalse(os.path.exists(shadow.COMMIT_MARK))
 
     def test_save_state_never_rotates_corrupt_primary_into_backup(self):
         """复审修复(0719)：损坏主文件绝不覆盖好备份。"""
