@@ -43,13 +43,39 @@ class ShadowLedgerTest(unittest.TestCase):
         self.assertIn("R", out["accounts"])
 
     def test_corrupt_primary_state_recovers_from_backup(self):
-        with open(self.paths["STATE"], "w", encoding="utf-8") as f:
-            f.write("not-json")
+        good = {"A": {"open": []}, "C": {"open": []}, "last_run": "20260701"}
         with open(self.paths["STATE"] + ".bak", "w", encoding="utf-8") as f:
-            json.dump({"A": {"open": []}, "C": {"open": []}, "last_run": "20260701"}, f)
+            json.dump(good, f)
+        with open(self.paths["STATE"], "w", encoding="utf-8") as f:
+            f.write("broken")
+        # 复审修复(0719)契约：恢复后必须停止执行
+        with self.assertRaises(RuntimeError):
+            shadow.load_state()
+        # .bak 原封不动
+        with open(self.paths["STATE"] + ".bak", encoding="utf-8") as f:
+            self.assertEqual(json.load(f)["last_run"], "20260701")
+        # 主文件已被原子恢复为好状态
+        with open(self.paths["STATE"], encoding="utf-8") as f:
+            self.assertEqual(json.load(f)["last_run"], "20260701")
+        # 损坏件被隔离留证
+        corrupt = [x for x in os.listdir(self.tmp.name) if ".corrupt-" in x]
+        self.assertEqual(len(corrupt), 1)
+        # 下一次运行正常继续
         out = shadow.load_state()
         self.assertEqual(out["last_run"], "20260701")
-        self.assertEqual(out["state_version"], 2)
+
+    def test_save_state_never_rotates_corrupt_primary_into_backup(self):
+        """复审修复(0719)：损坏主文件绝不覆盖好备份。"""
+        good = {"A": {"open": []}, "C": {"open": []}, "last_run": "20260701"}
+        with open(self.paths["STATE"] + ".bak", "w", encoding="utf-8") as f:
+            json.dump(good, f)
+        with open(self.paths["STATE"], "w", encoding="utf-8") as f:
+            f.write("broken")
+        shadow.save_state({"last_run": "20260702"})
+        with open(self.paths["STATE"] + ".bak", encoding="utf-8") as f:
+            self.assertEqual(json.load(f)["last_run"], "20260701")   # 备份仍是好的
+        with open(self.paths["STATE"], encoding="utf-8") as f:
+            self.assertEqual(json.load(f)["last_run"], "20260702")   # 主文件是新状态
 
     def test_accounting_invariants_fail_closed(self):
         st = ledger.ensure_state({}, 500000)
@@ -146,19 +172,65 @@ class ShadowLedgerTest(unittest.TestCase):
     def test_decision_snapshot_is_append_only(self):
         data = {"data_date": "2026-07-02", "generated_at": "18:31", "state": {"cap": 40},
                 "base": {}, "candidates": []}
-        shadow.write_decision_snapshot("20260702", data, "raw-one")
-        shadow.write_decision_snapshot("20260702", data, "raw-one")
+        actions = {k: {"queued_code": None, "skip_reason": "state_can_open_false",
+                       "held_excluded": [], "eligible_after_exclusion": 0} for k in ("A", "C", "R")}
+        self.assertFalse(shadow.check_snapshot_conflict("20260702", "raw-one"))
+        shadow.write_decision_snapshot("20260702", data, "raw-one", actions)
+        # 同日同输入：冲突检查返回True=免写
+        self.assertTrue(shadow.check_snapshot_conflict("20260702", "raw-one"))
+        shadow.write_decision_snapshot("20260702", data, "raw-one", actions, skip_write=True)
         with open(self.paths["DECISIONS"], encoding="utf-8") as f:
             lines = f.readlines()
         self.assertEqual(len(lines), 1)
         snap = json.loads(lines[0])
         self.assertEqual(snap["input_hash"], snap["data_sha256"])
         self.assertIn("strategy_commit", snap)
-        self.assertIn("source_hashes", snap)
-        self.assertEqual(snap["decisions"]["A"]["decision_id"], "20260702-A-v1")
+        self.assertEqual(snap["decisions"]["A"]["decision_id"], "20260702-A-v2")
         self.assertEqual(snap["decisions"]["A"]["skip_reason"], "state_can_open_false")
+        # 同日输入变化：拒绝
         with self.assertRaises(RuntimeError):
-            shadow.write_decision_snapshot("20260702", data, "raw-two")
+            shadow.check_snapshot_conflict("20260702", "raw-two")
+
+    def test_snapshot_actual_action_matches_queue_when_top1_already_held(self):
+        """复审修复(0719)：快照的实际动作必须与真实排队一致（含已持有排除）。"""
+        st = ledger.ensure_state({}, 500000)
+        st["A"]["open"] = [{"code": "600001", "shares": 100}]
+        cands = [
+            {"code": "600001", "name": "甲", "score": 99, "sec_rank": 1, "rs": 1, "prior60": -1, "amt20_yi": 3},
+            {"code": "600002", "name": "乙", "score": 80, "sec_rank": 2, "rs": 1, "prior60": -1, "amt20_yi": 3},
+        ]
+        action = shadow._queue_new_entry("A", st, "20260702", cands, True, 40)
+        self.assertEqual(action["queued_code"], "600002")
+        self.assertEqual(action["skip_reason"], "queued")
+        self.assertIn("600001", action["held_excluded"])
+        data = {"data_date": "2026-07-02", "generated_at": "18:31", "state": {"cap": 40, "can_open": True},
+                "base": {}, "candidates": cands}
+        shadow.write_decision_snapshot("20260702", data, "raw-x", {"A": action, "C": None, "R": None})
+        with open(self.paths["DECISIONS"], encoding="utf-8") as f:
+            snap = json.loads(f.readlines()[0])
+        rec = snap["decisions"]["A"]
+        self.assertEqual(rec["raw_top1"], "600001")                       # 原始排名第一=已持有的甲
+        self.assertEqual(rec["actual"]["queued_code"], "600002")          # 实际排队=乙，两者并存不背离
+        self.assertEqual(st["A"]["pending_entry"]["code"], "600002")
+
+    def test_missing_base_price_fails_closed_without_nav(self):
+        """复审修复(0719)：底仓价格缺失→当日不交易不记账（无NAV行），事件留痕。"""
+        st = ledger.ensure_state({}, 500000)
+        st["accounts"]["base"]["base"] = {"code": "510300", "shares": 1000, "last_px": 5.0}
+        with open(self.paths["STATE"], "w", encoding="utf-8") as f:
+            json.dump(st, f)
+        data_js = ('window.STRATEGY_DATA = {"data_date": "2026-07-02", "state": {"cap": 40, "can_open": false},'
+                   ' "base": {"etf": "510300", "weight": 30}, "candidates": []};')
+        datapath = os.path.join(self.tmp.name, "data.js")
+        with open(datapath, "w", encoding="utf-8") as f:
+            f.write(data_js)
+        with mock.patch.object(shadow.C, "DATA_JS_PATH", datapath), \
+             mock.patch.object(shadow, "fund_close", return_value=None), \
+             mock.patch.object(shadow.P, "_recent_trade_dates", return_value=["20260702"]):
+            shadow.main(today="20260702")
+        self.assertFalse(os.path.exists(self.paths["NAV"]))               # 未写NAV
+        events = pd.read_csv(self.paths["EVENTS"])
+        self.assertIn("行情缺失-失败关闭", set(events["事件"]))
 
     def test_random_rank_control_uses_frozen_sha256_rule(self):
         cands = [

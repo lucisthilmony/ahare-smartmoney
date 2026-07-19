@@ -46,33 +46,58 @@ def load_state():
         st = {"A": {"open": [], "pending_entry": None, "pending_exit": []},
               "C": {"open": [], "pending_entry": None, "pending_exit": []}, "last_run": None}
         return LEDGER.ensure_state(st, INIT_CAPITAL)
-    errors = []
-    for path in (STATE, STATE + ".bak"):
+    try:
+        with open(STATE, encoding="utf-8") as f:
+            st = json.load(f)
+        return LEDGER.ensure_state(st, INIT_CAPITAL)
+    except Exception as e_main:
         try:
-            with open(path, encoding="utf-8") as f:
-                st = json.load(f)
-            if path.endswith(".bak"):
-                log("⚠️ 主状态损坏，已从 .shadow_state.json.bak 恢复")
-            return LEDGER.ensure_state(st, INIT_CAPITAL)
-        except Exception as e:
-            errors.append(f"{os.path.basename(path)}: {e}")
-    raise RuntimeError("影子状态及备份均无法读取；为防重复建仓已停止：" + " | ".join(errors))
+            with open(STATE + ".bak", encoding="utf-8") as f:
+                bak_st = json.load(f)
+        except Exception as e_bak:
+            raise RuntimeError("影子状态及备份均无法读取；为防重复建仓已停止："
+                               f"main={e_main} | bak={e_bak}")
+        # 复审修复(0719)：主损坏→①隔离损坏件留证 ②从.bak原子恢复主文件（不动.bak）③今日停跑待核对
+        quarantine = STATE + ".corrupt-" + dt.datetime.now().strftime("%Y%m%d%H%M%S")
+        os.replace(STATE, quarantine)
+        tmp = STATE + ".restore.tmp"
+        with open(STATE + ".bak", "rb") as src, open(tmp, "wb") as dst:
+            dst.write(src.read()); dst.flush(); os.fsync(dst.fileno())
+        os.replace(tmp, STATE)
+        raise RuntimeError(
+            f"⚠️ 主状态损坏（已隔离为 {os.path.basename(quarantine)}），已从 .bak 原子恢复主文件，"
+            f".bak 未被改动。恢复点 last_run={bak_st.get('last_run')}。今日停止执行，"
+            f"请核对恢复点与交割表一致后，下一交易日自动续跑。")
 
 def save_state(st):
     if os.path.exists(STATE):
-        with open(STATE, "rb") as src, open(STATE + ".bak.tmp", "wb") as dst:
-            dst.write(src.read()); dst.flush(); os.fsync(dst.fileno())
-        os.replace(STATE + ".bak.tmp", STATE + ".bak")
+        try:                                   # 复审修复(0719)：损坏的主文件禁止覆盖好备份
+            with open(STATE, encoding="utf-8") as f:
+                json.load(f)
+            rotate_ok = True
+        except Exception:
+            rotate_ok = False
+            log("⚠️ 现有主状态不是合法JSON，跳过轮换以保护 .bak")
+        if rotate_ok:
+            with open(STATE, "rb") as src, open(STATE + ".bak.tmp", "wb") as dst:
+                dst.write(src.read()); dst.flush(); os.fsync(dst.fileno())
+            os.replace(STATE + ".bak.tmp", STATE + ".bak")
     tmp = STATE + ".tmp"
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(st, f, ensure_ascii=False, indent=1)
         f.flush(); os.fsync(f.fileno())
     os.replace(tmp, STATE)
 
+class QuoteAPIError(RuntimeError):
+    """行情API失败（≠停牌/空数据）——调用方必须显式处理，禁止静默沿用旧价。"""
+
 def daily_bars(code, start):
     ts = code + (".SH" if code.startswith("6") else ".SZ")
-    df = P._ts_query("daily", ts_code=ts, start_date=start,
-                     fields="trade_date,open,high,low,close")
+    try:
+        df = P._ts_query("daily", ts_code=ts, start_date=start,
+                         fields="trade_date,open,high,low,close")
+    except Exception as e:
+        raise QuoteAPIError(f"行情API失败 {ts}: {e}")   # 复审修复(0719)
     time.sleep(0.12)
     return df.sort_values("trade_date").reset_index(drop=True) if df is not None else None
 
@@ -115,8 +140,11 @@ def fund_close(code, date):
         df = P._ts_query("fund_daily", ts_code=_fund_ts_code(code), start_date=date, end_date=date,
                          fields="trade_date,close")
         px = float(df.iloc[0]["close"]) if df is not None and len(df) else None
-    except Exception:
+        if px is None:
+            log(f"⚠️ ETF {code} 于 {date} 无收盘价（数据未发布或代码异常）")
+    except Exception as e:
         px = None
+        log(f"⚠️ ETF行情API失败 {code} {date}: {str(e)[:60]}")   # 复审修复(0719)：不再静默
     _FUND_PRICE_CACHE[key] = px
     return px
 
@@ -164,7 +192,11 @@ def _execute_pending_entry(stream, st, today):
     pe = s.get("pending_entry")
     if not pe:
         return
-    bars = daily_bars(pe["code"], pe["decide_date"])
+    try:
+        bars = daily_bars(pe["code"], pe["decide_date"])
+    except QuoteAPIError as e:
+        log(f"  [{stream}] {e} → 排队保留，不计停牌重试")   # 复审修复(0719)
+        return
     if bars is None or not len(bars):
         pe["tries"] = pe.get("tries", 0) + 1
         if pe["tries"] >= 3:
@@ -215,17 +247,31 @@ def _execute_pending_entry(stream, st, today):
         ("（与另一流重叠）" if ov else ""))
 
 def _queue_new_entry(stream, st, today, cands, can_open, cap):
+    """返回实际动作记录（复审修复0719：快照必须与真实排队一致）。"""
     s = st[stream]
-    if can_open and len(s["open"]) < MAX_POS and s.get("pending_entry") is None:
-        pool = _eligible(cands, stream)
-        pool = [c for c in pool if c.get("code") not in {p["code"] for p in s["open"]}]
-        if pool:
-            c0 = _selected(pool, stream, today, already_eligible=True)
-            s["pending_entry"] = dict(code=c0["code"], name=c0.get("name", ""), board=c0.get("board", "main"),
-                                      ind=c0.get("ind") or c0.get("sec", ""), score=c0.get("score"),
-                                      sec_rank=c0.get("sec_rank"), stop_price=c0.get("stop_price"),
-                                      cap=cap, decide_date=today, tries=0)
-            log(f"  [{stream}] 排队入场 {c0.get('name')}（明日收盘成交）")
+    held = {p["code"] for p in s["open"]}
+    raw_pool = _eligible(cands, stream)
+    held_excluded = [c.get("code") for c in raw_pool if c.get("code") in held]
+    action = dict(queued_code=None, queued_name=None, held_excluded=held_excluded,
+                  eligible_after_exclusion=len(raw_pool) - len(held_excluded))
+    if not can_open:
+        action["skip_reason"] = "state_can_open_false"; return action
+    if len(s["open"]) >= MAX_POS:
+        action["skip_reason"] = "portfolio_full"; return action
+    if s.get("pending_entry") is not None:
+        action["skip_reason"] = "pending_entry_exists"; return action
+    pool = [c for c in raw_pool if c.get("code") not in held]
+    if not pool:
+        action["skip_reason"] = "all_eligible_held" if raw_pool else "no_eligible_candidate"
+        return action
+    c0 = _selected(pool, stream, today, already_eligible=True)
+    s["pending_entry"] = dict(code=c0["code"], name=c0.get("name", ""), board=c0.get("board", "main"),
+                              ind=c0.get("ind") or c0.get("sec", ""), score=c0.get("score"),
+                              sec_rank=c0.get("sec_rank"), stop_price=c0.get("stop_price"),
+                              cap=cap, decide_date=today, tries=0)
+    action.update(queued_code=c0["code"], queued_name=c0.get("name", ""), skip_reason="queued")
+    log(f"  [{stream}] 排队入场 {c0.get('name')}（明日收盘成交）")
+    return action
 
 def _ma10(code, upto):
     bars = daily_bars(code, (dt.datetime.strptime(upto, "%Y%m%d") - dt.timedelta(days=30)).strftime("%Y%m%d"))
@@ -303,7 +349,8 @@ def _strategy_version():
     except Exception:
         return "unknown"
 
-def _decision_record(today, stream, cands, state, st):
+def _decision_record(today, stream, cands, action):
+    """复审修复(0719)：原始排名与最终实际动作并存，快照与真实排队不再可能背离。"""
     pool = _eligible(cands, stream)
     if stream == "R":
         ranked = sorted(pool, key=lambda c: _random_key(c, today))
@@ -311,30 +358,46 @@ def _decision_record(today, stream, cands, state, st):
     else:
         ranked = sorted(pool, key=lambda c: c.get("score", 0), reverse=True)
         rank_rule = "score_desc"
-    selected = ranked[0] if ranked else None
-    reason = ""
-    if not bool(state.get("can_open")):
-        reason = "state_can_open_false"
-    elif st and len(st[stream]["open"]) >= MAX_POS:
-        reason = "portfolio_full"
-    elif st and st[stream].get("pending_entry"):
-        reason = "pending_entry_exists"
-    elif not selected:
-        reason = "no_eligible_candidate"
     return {
-        "decision_id": f"{today}-{stream}-v1",
+        "decision_id": f"{today}-{stream}-v2",
         "stream": stream,
         "rank_rule": rank_rule,
         "eligible_count": len(ranked),
         "candidate_rank": [{"rank": i + 1, "code": c.get("code"), "score": c.get("score"),
                             "rank_hash": _random_key(c, today) if stream == "R" else None}
                            for i, c in enumerate(ranked)],
-        "selected": selected,
-        "skip_reason": reason,
+        "raw_top1": (ranked[0].get("code") if ranked else None),
+        "actual": action,                       # 实际排队结果（含held_excluded与最终skip_reason）
+        "skip_reason": (action or {}).get("skip_reason", ""),
     }
 
-def write_decision_snapshot(today, data, raw_text, st=None):
-    """每日原始输入与 A/C 选择只追加一次；同日内容变化时拒绝静默覆盖。"""
+def check_snapshot_conflict(today, raw_text):
+    """前置检查（复审修复0719）：同日已有快照→输入/代码变化则停止；一致则返回True表示今日免写。"""
+    if not os.path.exists(DECISIONS):
+        return False
+    data_hash = hashlib.sha256(raw_text.encode("utf-8")).hexdigest()
+    source_hashes = {
+        os.path.basename(__file__): _file_sha256(__file__),
+        os.path.basename(LEDGER.__file__): _file_sha256(LEDGER.__file__),
+        os.path.basename(SPEC.__file__): _file_sha256(SPEC.__file__),
+    }
+    with open(DECISIONS, encoding="utf-8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            old = json.loads(line)
+            if old.get("date") == today:
+                if old.get("data_sha256") != data_hash:
+                    raise RuntimeError("同日 data.js 已变化；保留既有影子决策快照并停止执行")
+                if old.get("source_hashes") != source_hashes:
+                    raise RuntimeError("同日策略代码已变化；保留既有影子决策快照并停止执行")
+                return True
+    return False
+
+def write_decision_snapshot(today, data, raw_text, actions, skip_write=False):
+    """写入含"原始排名+实际动作"的当日快照（在全部排队完成后调用）。"""
+    if skip_write:
+        return
     cands = data.get("candidates") or []
     state = data.get("state") or {}
     source_hashes = {
@@ -351,7 +414,7 @@ def write_decision_snapshot(today, data, raw_text, st=None):
         "base": data.get("base") or {},
         "candidate_count": len(cands),
         "candidates": cands,
-        "decisions": {s: _decision_record(today, s, cands, state, st) for s in ("A", "C", "R")},
+        "decisions": {s: _decision_record(today, s, cands, actions.get(s)) for s in ("A", "C", "R")},
         "data_sha256": data_hash,
         "input_hash": data_hash,
         "strategy_commit": _strategy_version(),
@@ -362,18 +425,6 @@ def write_decision_snapshot(today, data, raw_text, st=None):
         "rerun_id": f"{today}-scheduled",
     }
     encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, default=str)
-    if os.path.exists(DECISIONS):
-        with open(DECISIONS, encoding="utf-8") as f:
-            for line in f:
-                if not line.strip():
-                    continue
-                old = json.loads(line)
-                if old.get("date") == today:
-                    if old.get("data_sha256") != payload["data_sha256"]:
-                        raise RuntimeError("同日 data.js 已变化；保留既有影子决策快照并停止执行")
-                    if old.get("source_hashes") != payload["source_hashes"]:
-                        raise RuntimeError("同日策略代码已变化；保留既有影子决策快照并停止执行")
-                    return
     with open(DECISIONS, "a", encoding="utf-8") as f:
         f.write(encoded + "\n"); f.flush(); os.fsync(f.fileno())
 
@@ -424,8 +475,8 @@ def write_nav(st, state, base, today):
     }
     upsert_csv(row, NAV, ("date",))
 
-def main():
-    today = dt.date.today().strftime("%Y%m%d")
+def main(today=None):
+    today = today or dt.date.today().strftime("%Y%m%d")   # 可注入：测试/补跑用
     if today not in set(P._recent_trade_dates(8)):
         log("非交易日，跳过。"); return
     try:
@@ -444,20 +495,41 @@ def main():
         log("今日已运行过，跳过（幂等）。"); return
     state = d.get("state") or {}
     cands = d.get("candidates") or []
+    base = d.get("base") or {}
     if not st.get("accounting_start"):
         st["accounting_start"] = today
     try:
-        write_decision_snapshot(today, d, txt, st)
+        snapshot_done = check_snapshot_conflict(today, txt)
     except Exception as e:
-        log(f"影子决策快照失败：{e}"); return
+        log(f"影子决策快照冲突：{e}"); return
+    # 复审修复(0719)：价格预检失败关闭——目标ETF或任一账户持有ETF当日无价 → 今日不交易不记账
+    need_px = set()
+    if base.get("etf") and (base.get("weight") or 0) > 0:
+        need_px.add(str(base["etf"]))
+    for name in ("base", "A", "C", "R"):
+        h = (st.get("accounts", {}).get(name) or {}).get("base")
+        if h and h.get("shares", 0) > 0:
+            need_px.add(str(h["code"]))
+    missing = [c for c in sorted(need_px) if fund_close(c, today) is None]
+    if missing:
+        log(f"⛔ 失败关闭：底仓ETF当日收盘价缺失 {missing}——今日不记账不交易（幂等，修复后可当日手动重跑）")
+        for c in missing:
+            upsert_csv({"流": "base", "决策日": today, "代码": c, "名称": "底仓ETF", "事件": "行情缺失-失败关闭"},
+                       EVENTS, ("流", "决策日", "代码", "事件"))
+        return
     # 时间顺序与组合回测一致：已有仓先出场 → 底仓调仓 → 昨日信号尾盘入场 → 今日信号排队。
     for stream in ("A", "C", "R"):
         _update_positions(stream, st, today)
-    base = d.get("base") or {}
     rebalance_base_accounts(st, base, today)
+    actions = {}
     for stream in ("A", "C", "R"):
         _execute_pending_entry(stream, st, today)
-        _queue_new_entry(stream, st, today, cands, bool(state.get("can_open")), state.get("cap", 0))
+        actions[stream] = _queue_new_entry(stream, st, today, cands,
+                                           bool(state.get("can_open")), state.get("cap", 0))
+    try:
+        write_decision_snapshot(today, d, txt, actions, skip_write=snapshot_done)
+    except Exception as e:
+        log(f"影子决策快照失败：{e}"); return
     try:
         LEDGER.validate_state(st)
     except Exception as e:

@@ -8,3 +8,5 @@ token测试结果.txt
 .DS_Store
 .base_last_weight.json
 .shadow_state.json.bak
+.shadow_state.json*
+*.jsonl
