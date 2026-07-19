@@ -127,8 +127,25 @@ def upsert_csv(row, path, keys):
     columns = list(dict.fromkeys(list(old.columns) + list(new.columns)))
     _atomic_csv(path, pd.concat([old.reindex(columns=columns), new.reindex(columns=columns)], ignore_index=True))
 
+_STAGED = []   # 复审三轮(0719)：运行内暂存全部CSV副作用；仅在提交点落盘——任何闸门失败=磁盘零变化
+
+def _stage(row, path, keys):
+    _STAGED.append((dict(row), path, tuple(keys)))
+
+def _flush_staged():
+    global _STAGED
+    for row, path, keys in _STAGED:
+        upsert_csv(row, path, keys)
+    _STAGED = []
+
+def _discard_staged():
+    global _STAGED
+    if _STAGED:
+        log(f"（已丢弃 {len(_STAGED)} 条未落盘副作用——本次运行对磁盘零变化）")
+    _STAGED = []
+
 def append_trade(row):
-    upsert_csv(row, TRADES, ("流", "开仓日", "代码", "平仓日"))
+    _stage(row, TRADES, ("流", "开仓日", "代码", "平仓日"))
 
 def cost_frac(board, date):
     return 2 * SPEC.SLIP.get(board, 0.001) + 2 * SPEC.COMM_RATE + SPEC.stamp_rate(date)
@@ -293,7 +310,7 @@ def _event(stream, pe, kind):
     """不可成交类事件（涨停未成交/停牌放弃/高开放弃）——评估可达性偏差用。"""
     row = {"流": stream, "决策日": pe.get("decide_date"), "代码": pe.get("code"),
            "名称": pe.get("name"), "事件": kind}
-    upsert_csv(row, EVENTS, ("流", "决策日", "代码", "事件"))
+    _stage(row, EVENTS, ("流", "决策日", "代码", "事件"))
     log(f"  [{stream}] {kind}: {pe.get('name')}")
 
 def _close(stream, st, pos, date, px, reason):
@@ -444,7 +461,7 @@ def rebalance_base_accounts(st, base, today):
         for t in trades:
             row = {"账户": name, "日期": t["date"], "方向": t["side"], "代码": t["code"],
                    "股数": t["shares"], "价格": round(t["price"], 4), "费用": round(t["fee"], 2)}
-            upsert_csv(row, BASE_TRADES, ("账户", "日期", "方向", "代码"))
+            _stage(row, BASE_TRADES, ("账户", "日期", "方向", "代码"))
 
 def write_nav(st, state, base, today, stale_codes=None):
     b = LEDGER.snapshot_account(st["accounts"]["base"], [], INIT_CAPITAL)
@@ -496,8 +513,8 @@ def _read_snapshot(today):
                     return obj
     return {}
 
-def confirm_recovery():
-    """人工核对后解锁 recovery_required（先做自动一致性检查并打印，仍需人来跑本命令=确认）。"""
+def confirm_recovery(force=False):
+    """核对通过才解锁；发现问题保持锁定（复审三轮）。--force-unlock=人工对账后强制解锁。"""
     with open(STATE, encoding="utf-8") as f:
         st = json.load(f)
     lock = st.get("recovery_required")
@@ -516,11 +533,17 @@ def confirm_recovery():
             problems.append(f"NAV末行({n.iloc[-1]['date']})与恢复点last_run({last})不一致")
     for msg in problems:
         print("⚠️", msg)
-    print(("检查通过。" if not problems else "以上告警请确认已人工处理。") + " 解锁 recovery_required。")
+    if problems and not force:
+        print(f"⛔ 核对发现 {len(problems)} 项问题：**保持锁定，状态未改动**。"
+              f"请人工处理后重跑本命令；确已人工对账且接受风险，可用 --force-unlock 强制解锁。")
+        return False
+    print(("检查通过，" if not problems else "--force-unlock 已确认人工对账，") + "解锁 recovery_required。")
     st.pop("recovery_required", None)
     save_state(st)
+    return True
 
 def main(today=None):
+    _discard_staged()   # 复审三轮：清理可能的残留暂存
     today = today or dt.date.today().strftime("%Y%m%d")   # 可注入：测试/补跑用
     if today not in set(P._recent_trade_dates(8)):
         log("非交易日，跳过。"); return
@@ -560,7 +583,7 @@ def main(today=None):
         log(f"⛔ 失败关闭：底仓ETF当日收盘价缺失 {missing}——今日不记账不交易（幂等，修复后可当日手动重跑）")
         for c in missing:
             upsert_csv({"流": "base", "决策日": today, "代码": c, "名称": "底仓ETF", "事件": "行情缺失-失败关闭"},
-                       EVENTS, ("流", "决策日", "代码", "事件"))
+                       EVENTS, ("流", "决策日", "代码", "事件"))   # 无状态变更前的早退：直接落盘
         return
     stale_codes = []
     # 复审二轮(0719)：个股持仓预检——当日无K线（data.js已确认今日全市场数据存在→视为停牌）
@@ -570,10 +593,10 @@ def main(today=None):
             bars = daily_bars(pos["code"], pos["entry_date"])
             if bars is None or today not in set(bars["trade_date"].astype(str)):
                 stale_codes.append(pos["code"])
-                upsert_csv({"流": stream, "决策日": today, "代码": pos["code"], "名称": pos.get("name", ""),
-                            "事件": "当日无行情-停牌沿用旧价"}, EVENTS, ("流", "决策日", "代码", "事件"))
+                _stage({"流": stream, "决策日": today, "代码": pos["code"], "名称": pos.get("name", ""),
+                        "事件": "当日无K线-沿用旧价(原因待确认)"}, EVENTS, ("流", "决策日", "代码", "事件"))
     if stale_codes:
-        log(f"⚠️ 个股当日无行情(停牌?)：{stale_codes}——按旧价标记并显式记录")
+        log(f"⚠️ 个股当日无K线：{stale_codes}——按旧价标记并显式记录（原因待确认：停牌/退市/数据缺失）")
     # 时间顺序与组合回测一致：已有仓先出场 → 底仓调仓 → 昨日信号尾盘入场 → 今日信号排队。
     for stream in ("A", "C", "R"):
         _update_positions(stream, st, today)
@@ -585,23 +608,30 @@ def main(today=None):
                                            bool(state.get("can_open")), state.get("cap", 0))
     try:
         if snapshot_done:
-            # 复审二轮(0719)：补跑路径必须与既有快照的actual一致，否则说明状态已漂移——停止，禁止带病记账
+            # 复审三轮(0719)：补跑必须与既有快照的**完整actual**逐流一致（不只queued_code）；
+            # 背离→丢弃全部暂存副作用（交割/事件/底仓成交均未落盘）、不写NAV、不推进last_run、不保存状态。
             prior = _read_snapshot(today)
             for sname in ("A", "C", "R"):
-                old_q = ((prior.get("decisions", {}).get(sname, {}) or {}).get("actual") or {}).get("queued_code")
-                new_q = (actions.get(sname) or {}).get("queued_code")
-                if old_q != new_q:
-                    log(f"⛔ 补跑背离：快照[{sname}]actual={old_q} 而本次重算={new_q}——状态漂移，停止执行，"
+                old_a = (prior.get("decisions", {}).get(sname, {}) or {}).get("actual") or {}
+                new_a = actions.get(sname) or {}
+                if old_a != new_a:
+                    log(f"⛔ 补跑背离：快照[{sname}]actual={old_a} 而本次重算={new_a}——状态漂移，停止执行，"
                         f"请人工核对 .shadow_state.json 与快照后处理")
+                    _discard_staged()
                     return
-        else:
-            write_decision_snapshot(today, d, txt, actions)
     except Exception as e:
-        log(f"影子决策快照失败：{e}"); return
+        log(f"补跑一致性检查失败：{e}"); _discard_staged(); return
     try:
         LEDGER.validate_state(st)
     except Exception as e:
-        log(str(e)); return
+        log(str(e)); _discard_staged(); return
+    # ---- 提交点：以上全部闸门通过后才允许触盘 ----
+    try:
+        _flush_staged()
+        if not snapshot_done:
+            write_decision_snapshot(today, d, txt, actions)
+    except Exception as e:
+        log(f"提交失败：{e}"); return
     write_nav(st, state, base, today, stale_codes)
     st["last_run"] = today
     save_state(st)
@@ -610,6 +640,6 @@ def main(today=None):
 
 if __name__ == "__main__":
     if "--confirm-recovery" in sys.argv:
-        confirm_recovery()
+        confirm_recovery(force=("--force-unlock" in sys.argv))
     else:
         main()

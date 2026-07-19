@@ -129,7 +129,93 @@ class ShadowLedgerTest(unittest.TestCase):
         nav = pd.read_csv(self.paths["NAV"], dtype=str)
         self.assertIn("600001", str(nav.iloc[-1]["stale_px_codes"]))   # 显式标记
         events = pd.read_csv(self.paths["EVENTS"])
-        self.assertIn("当日无行情-停牌沿用旧价", set(events["事件"]))
+        self.assertIn("当日无K线-沿用旧价(原因待确认)", set(events["事件"]))
+
+    def _rerun_scene(self, prior_A_action, state_mutator=None):
+        """构造补跑场景：既有快照+可控状态，返回运行后的产物路径检查闭包。"""
+        st = ledger.ensure_state({}, 500000)
+        cands = [
+            {"code": "600001", "name": "甲", "score": 99, "sec_rank": 1, "rs": 1, "prior60": -1,
+             "amt20_yi": 3, "board": "main", "stop_price": 9.0, "close": 10.0},
+            {"code": "600002", "name": "乙", "score": 80, "sec_rank": 2, "rs": 1, "prior60": -1,
+             "amt20_yi": 3, "board": "main", "stop_price": 9.0, "close": 10.0},
+        ]
+        raw = ('window.STRATEGY_DATA = {"data_date": "2026-07-02", "state": {"cap": 40, "can_open": true},'
+               ' "base": {}, "candidates": ' + json.dumps(cands, ensure_ascii=False) + '};')
+        datapath = os.path.join(self.tmp.name, "data.js")
+        with open(datapath, "w", encoding="utf-8") as f:
+            f.write(raw)
+        d = json.loads(raw[raw.find("{"):raw.rfind("}") + 1])
+        base_action = {"queued_code": None, "queued_name": None, "held_excluded": [],
+                       "eligible_after_exclusion": 2, "skip_reason": "state_can_open_false"}
+        actions0 = {"A": prior_A_action, "C": dict(base_action), "R": dict(base_action)}
+        shadow.write_decision_snapshot("20260702", d, raw, actions0)
+        if state_mutator:
+            state_mutator(st)
+        with open(self.paths["STATE"], "w", encoding="utf-8") as f:
+            json.dump(st, f)
+        bars = pd.DataFrame([{"trade_date": "20260702", "open": 10, "high": 10.5, "low": 9.9, "close": 10.2}])
+        with mock.patch.object(shadow.C, "DATA_JS_PATH", datapath), \
+             mock.patch.object(shadow, "daily_bars", return_value=bars), \
+             mock.patch.object(shadow.P, "_recent_trade_dates", return_value=["20260702"]):
+            shadow.main(today="20260702")
+
+    def test_rerun_halts_when_full_actual_differs_even_if_queued_code_same(self):
+        """复审三轮(0719)：queued_code相同但skip_reason不同→仍须停跑。"""
+        # 快照：queued=None因pending_entry_exists；重算：queued=600001(排队成功)——queued不同必停已有覆盖；
+        # 这里构造 queued 都为 None 但 skip_reason 不同：快照=pending_entry_exists，重算=portfolio_full
+        prior = {"queued_code": None, "queued_name": None, "held_excluded": [],
+                 "eligible_after_exclusion": 2, "skip_reason": "pending_entry_exists"}
+        def mut(st):
+            st["A"]["open"] = [{"code": f"60000{i}", "shares": 100, "entry_date": "20260701",
+                                "entry": 10.0, "stop": 9.0, "target": 12.0, "half": True, "hold": 1,
+                                "last_px": 10.0} for i in (3, 4, 5)]   # 满仓→重算skip=portfolio_full
+        self._rerun_scene(prior, mut)
+        self.assertFalse(os.path.exists(self.paths["NAV"]))
+        with open(self.paths["STATE"], encoding="utf-8") as f:
+            self.assertNotEqual(json.load(f).get("last_run"), "20260702")
+
+    def test_rerun_divergence_leaves_zero_disk_side_effects(self):
+        """复审三轮(0719)：背离停跑时，交割/事件/底仓成交一律不得落盘（含他流的平仓）。"""
+        prior = {"queued_code": "600001", "queued_name": "甲", "held_excluded": [],
+                 "eligible_after_exclusion": 2, "skip_reason": "queued"}
+        def mut(st):
+            # C流有一笔将在今日触发止损确认次日开盘卖的持仓（bar中close 10.2>stop不触发…改用exit_next_open直接触发平仓）
+            st["C"]["open"] = [{"code": "600009", "name": "丙", "board": "main", "shares": 100,
+                                "entry_date": "20260701", "entry": 10.0, "stop": 9.0, "target": 12.0,
+                                "half": False, "hold": 0, "exit_next_open": "止损", "last_px": 10.0,
+                                "entry_shares": 100, "cost_basis": 1000.0, "buy_px": 10.0,
+                                "actual_risk_amt": 100.0}]
+            # A流持有甲→重算将排乙→与快照(甲)背离
+            st["A"]["open"] = [{"code": "600001", "shares": 100, "entry_date": "20260701",
+                                "entry": 10.0, "stop": 9.0, "target": 12.0, "half": False, "hold": 0,
+                                "last_px": 10.0}]
+        self._rerun_scene(prior, mut)
+        self.assertFalse(os.path.exists(self.paths["TRADES"]))       # C流平仓未落盘
+        self.assertFalse(os.path.exists(self.paths["BASE_TRADES"]))
+        self.assertFalse(os.path.exists(self.paths["NAV"]))
+        with open(self.paths["STATE"], encoding="utf-8") as f:
+            st_after = json.load(f)
+        self.assertNotEqual(st_after.get("last_run"), "20260702")
+        self.assertEqual(len(st_after["C"]["open"]), 1)              # 状态文件原样
+
+    def test_recovery_check_failure_keeps_lock_and_state(self):
+        """复审三轮(0719)：核对发现问题→不解锁、状态文件不变；--force-unlock才可带病解锁。"""
+        st = ledger.ensure_state({}, 500000)
+        st["last_run"] = "20260701"
+        st["recovery_required"] = {"at": "2026-07-19 17:00", "quarantine": "x"}
+        with open(self.paths["STATE"], "w", encoding="utf-8") as f:
+            json.dump(st, f)
+        # 制造问题：交割表存在晚于恢复点的平仓
+        pd.DataFrame([{"流": "A", "开仓日": "20260625", "代码": "600001", "名称": "甲",
+                       "平仓日": "20260715", "R": 1.0}]).to_csv(self.paths["TRADES"], index=False,
+                                                              encoding="utf-8-sig")
+        before = open(self.paths["STATE"], encoding="utf-8").read()
+        self.assertFalse(shadow.confirm_recovery())                  # 不解锁
+        self.assertEqual(open(self.paths["STATE"], encoding="utf-8").read(), before)  # 状态未动
+        self.assertTrue(shadow.confirm_recovery(force=True))         # 人工确认后强制解锁
+        with open(self.paths["STATE"], encoding="utf-8") as f:
+            self.assertNotIn("recovery_required", json.load(f))
 
     def test_save_state_never_rotates_corrupt_primary_into_backup(self):
         """复审修复(0719)：损坏主文件绝不覆盖好备份。"""
@@ -232,6 +318,7 @@ class ShadowLedgerTest(unittest.TestCase):
             self.assertIn("止损", st["A"]["open"][0]["exit_next_open"])
             shadow._update_positions("A", st, "20260704")
         self.assertEqual(st["A"]["open"], [])
+        shadow._flush_staged()   # 复审三轮：副作用事务化，单测需显式提交
         trades = pd.read_csv(self.paths["TRADES"])
         self.assertEqual(str(trades.iloc[0]["平仓日"]), "20260704")
         self.assertAlmostEqual(float(trades.iloc[0]["平仓价"]), 93.0)
