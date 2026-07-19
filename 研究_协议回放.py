@@ -83,6 +83,8 @@ def run(tag, pe, amend):
         if i > 0:
             nav *= 1 + pos*(r["hs_ret"] + 0.025/244) + (1-pos)*(0.018/244)
         peak = max(peak, nav); dd = nav/peak - 1
+        if freeze_b and halt_until == i - 1:
+            freeze_b = False                     # 停做期满复核通过（回放假设，见报告声明）
         # 2) 执行昨日目标（T+1收盘成交；成交后仓位自明日计收益）
         b_floor_now = max([w for k, (q, w, rq) in enumerate(B_RUNGS) if floors[k]] + [0])
         if pend_forced is not None:                       # 熔断强制（不受带宽/锁约束）
@@ -113,7 +115,7 @@ def run(tag, pe, amend):
         pct = (hist_pe < pe_now).mean() if (len(hist_pe) >= 500 and not np.isnan(pe_now)) else np.nan
         if not np.isnan(pct):
             for k, (q, w, rq) in enumerate(B_RUNGS):
-                if not floors[k] and not freeze_b and pct <= q:
+                if not floors[k] and not freeze_b and dd > -0.08 and pct <= q:
                     floors[k] = True; rel_cnt[k] = 0
                     events.append((dt_, f"B{k+1}地板{int(w*100)}%触发(分位{pct*100:.0f}%)"))
                 elif floors[k]:
