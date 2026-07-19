@@ -321,6 +321,56 @@ def apply_qfq(panel, factors):
         panel["vol"] = panel["vol"] / ratio.replace(0, np.nan)
     return panel.drop(columns=["adj_factor"]).reset_index(drop=True)
 
+def holder_number(ts_code, limit=12):
+    """股东户数（近况，含每期环比%）。
+    修复要点(2026-07-16)：Tushare stk_holdernumber 会混入 end_date==ann_date 的"公告占位空行"
+    (holder_num=None)，且对部分科创板票(如炬芯688049)基本无覆盖——这是此前拉数据出 NaN/空的根因。
+    改为：主源=东财 F10 ShareholderResearch(覆盖科创板/全市场、自带变化率)；备源=Tushare(过滤空行)。
+    返回按日期升序的 [{'date','num','chg_pct'}]；无数据返回 []。"""
+    code6 = ts_code.split(".")[0]
+    if ts_code.endswith(".SH"):   ex = "SH"
+    elif ts_code.endswith(".SZ"): ex = "SZ"
+    elif ts_code.endswith(".BJ"): ex = "BJ"
+    else:                          ex = "SH" if code6[:1] == "6" else "SZ"
+    # 1) 东财 F10（主）
+    try:
+        r = _rq.get("https://emweb.securities.eastmoney.com/PC_HSF10/ShareholderResearch/PageAjax",
+                    params={"code": ex + code6},
+                    headers={"User-Agent": "Mozilla/5.0", "Referer": "https://emweb.securities.eastmoney.com/"},
+                    timeout=8)
+        out = []
+        for row in ((r.json() or {}).get("gdrs") or []):
+            n = row.get("HOLDER_TOTAL_NUM"); d = (row.get("END_DATE") or "")[:10]
+            if n is None or not d:
+                continue
+            rt = row.get("TOTAL_NUM_RATIO")
+            out.append({"date": d, "num": int(n),
+                        "chg_pct": (round(float(rt), 2) if rt is not None else None)})
+        if out:
+            out.sort(key=lambda x: x["date"])
+            return out[-limit:]
+    except Exception:
+        pass
+    # 2) Tushare（备，过滤 end_date==ann_date 的空行）
+    try:
+        df = _ts_query("stk_holdernumber", ts_code=ts_code,
+                       start_date="20200101", end_date=dt.date.today().strftime("%Y%m%d"))
+        if df is not None and len(df):
+            df = df.copy()
+            df["holder_num"] = pd.to_numeric(df["holder_num"], errors="coerce")
+            df = df[df["holder_num"].notna() & (df["end_date"].astype(str) != df["ann_date"].astype(str))]
+            df = df.drop_duplicates("end_date").sort_values("end_date")
+            out = []; prev = None
+            for _, rr in df.iterrows():
+                n = int(rr["holder_num"]); s = str(rr["end_date"])
+                out.append({"date": "%s-%s-%s" % (s[:4], s[4:6], s[6:8]), "num": n,
+                            "chg_pct": (round((n / prev - 1) * 100, 2) if prev else None)})
+                prev = n
+            return out[-limit:]
+    except Exception:
+        pass
+    return []
+
 def _recent_trade_dates(n=70):
     today = dt.date.today().strftime("%Y%m%d")
     start = (dt.date.today() - dt.timedelta(days=160)).strftime("%Y%m%d")
