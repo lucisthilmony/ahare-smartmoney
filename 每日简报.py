@@ -54,7 +54,9 @@ def main():
         fresh = "✓" if dd_norm == today else f"⚠️数据日={js.get('data_date')}"
         veto = "⛔一票否决" if st.get("veto") else "无否决"
         lines.append(f"档位 **{st.get('tier','?')}**（状态分{st.get('score','?')}/4，{veto}）{fresh}")
-        lines.append(f"广度 涨{st.get('up_cnt','?')}/跌{st.get('down_cnt','?')} · 涨停{st.get('limit_up','?')}/跌停{st.get('limit_down','?')} · 情绪:{st.get('regime',{}).get('label','?')}")
+        lu, ld = st.get("limit_up"), st.get("limit_down")
+        lim_s = f"涨停{lu}/跌停{ld}" if lu is not None else "涨停/跌停:榜单未发布"
+        lines.append(f"广度 涨{st.get('up_cnt','?')}/跌{st.get('down_cnt','?')} · {lim_s} · 情绪:{st.get('regime',{}).get('label','?')}")
     except Exception as e:
         warn.append(f"data.js读取失败:{e}")
 

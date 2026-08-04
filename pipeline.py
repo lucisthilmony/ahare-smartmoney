@@ -483,8 +483,13 @@ def build_with_tushare():
     try:
         _lu = _ts_query("limit_list_d", trade_date=last_day, limit_type="U")
         _ld = _ts_query("limit_list_d", trade_date=last_day, limit_type="D")
-        lu_n = int(len(_lu)) if _lu is not None else None
-        ld_n = int(len(_ld)) if _ld is not None else None
+        # 全市场涨停0家实际不发生：U为空视为"榜单未发布"（盘后源端常延迟到17:40+），
+        # 记None而非0，显示层据此标"未发布"；U非空时D为空才是真实的跌停0家
+        if _lu is None or len(_lu) == 0:
+            lu_n = ld_n = None
+        else:
+            lu_n = int(len(_lu))
+            ld_n = int(len(_ld)) if _ld is not None else 0
     except Exception:
         lu_n = ld_n = None
     _hs_ma20 = bool((hs.get("close") or 0) >= (hs.get("ma20") or 0)) if hs else True   # ma20 可能为 None（历史不足）
