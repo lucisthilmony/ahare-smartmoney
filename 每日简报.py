@@ -92,10 +92,9 @@ def main():
         mark = os.path.exists(".shadow_commit_pending.json")
         nav = pd.read_csv("前向影子净值.csv", header=None).iloc[-1]
         if ok_run and not rec and not mark:
-            accs = s.get("accounts", {})
-            npos = sum(1 for a in ("A", "C", "R") for x in [s.get("streams", {}).get(a, {})]
-                       if isinstance(x, dict) and x.get("positions"))
-            lines.append(f"影子系统 ✅ 已记账（{s.get('last_run')}）· A/C/R持仓 {npos if npos else '0/0/0'} · 恢复锁无 · 半提交无")
+            # 持仓在顶层 A/C/R 流的 open 列表（修正2026-08-10：原误读不存在的streams键，恒显示0/0/0）
+            npos = "/".join(str(len((s.get(k) or {}).get("open") or [])) for k in ("A", "C", "R"))
+            lines.append(f"影子系统 ✅ 已记账（{s.get('last_run')}）· A/C/R持仓 {npos} · 恢复锁无 · 半提交无")
         else:
             flag = []
             if not ok_run: flag.append(f"last_run={s.get('last_run')}≠今日")
