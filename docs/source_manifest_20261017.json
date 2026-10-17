@@ -1,0 +1,1760 @@
+[
+  {
+    "path": "01_策略文档/Alpha管线-远期路线图-2026-07-20.md",
+    "source_sha256": "d79099c24f356ddb818f4d1e10c2d16813b4a49574a50657428a3b5af384ece9",
+    "repo_sha256": "d79099c24f356ddb818f4d1e10c2d16813b4a49574a50657428a3b5af384ece9",
+    "changed_from_source": false
+  },
+  {
+    "path": "01_策略文档/A股交易策略-理论评级与综合体系.md",
+    "source_sha256": "6907533bb4feee85e2d8510481c918dad83c0eff08cb6b531900155dff75e27a",
+    "repo_sha256": "6907533bb4feee85e2d8510481c918dad83c0eff08cb6b531900155dff75e27a",
+    "changed_from_source": false
+  },
+  {
+    "path": "01_策略文档/A股短线波段策略-零基础操作手册.md",
+    "source_sha256": "ed1c057d0d947f759735826d081a52d6b16db467ee789df9605c686d73e7db71",
+    "repo_sha256": "ed1c057d0d947f759735826d081a52d6b16db467ee789df9605c686d73e7db71",
+    "changed_from_source": false
+  },
+  {
+    "path": "01_策略文档/v3升级实施记录-外部评审采纳-20260710.md",
+    "source_sha256": "8b49d0eefac9ab27474077aa37e711e5ac0f16ab104267b67d570f13ce90fa57",
+    "repo_sha256": "8b49d0eefac9ab27474077aa37e711e5ac0f16ab104267b67d570f13ce90fa57",
+    "changed_from_source": false
+  },
+  {
+    "path": "01_策略文档/三线架构-研究路线-2026-07-19.md",
+    "source_sha256": "1180970cd211dcfa7486965ceffe8988f2bf3c142ccd7a45a08633529995ebfe",
+    "repo_sha256": "961724a5aa66be0219f7415d7145df4a75afed8a59ab0a60c8b2180aba113869",
+    "changed_from_source": true
+  },
+  {
+    "path": "01_策略文档/外部审查整改总结-2026-07-10.md",
+    "source_sha256": "7587fbfe80ae3f91e397becbfbfb52ce8dc7122eae742c3c7b4d6d11ee7a091d",
+    "repo_sha256": "7587fbfe80ae3f91e397becbfbfb52ce8dc7122eae742c3c7b4d6d11ee7a091d",
+    "changed_from_source": false
+  },
+  {
+    "path": "01_策略文档/手册修订提案-2026-07-03.md",
+    "source_sha256": "91bbca17bd2357070fa5a575f55313b70fa64671f6910248213b31e1cb255d40",
+    "repo_sha256": "91bbca17bd2357070fa5a575f55313b70fa64671f6910248213b31e1cb255d40",
+    "changed_from_source": false
+  },
+  {
+    "path": "01_策略文档/新版使用说明书-v6.3.md",
+    "source_sha256": "75e1d974221a3c0c5ccc63174f79148464d5e23b6a87547078854348f9ed26be",
+    "repo_sha256": "75e1d974221a3c0c5ccc63174f79148464d5e23b6a87547078854348f9ed26be",
+    "changed_from_source": false
+  },
+  {
+    "path": "01_策略文档/每天怎么用-一页纸.md",
+    "source_sha256": "c88fe4efb835b4c3aa0075ffd1c30bd355fb27e7600a2b5f3b201ca4e40148e4",
+    "repo_sha256": "c88fe4efb835b4c3aa0075ffd1c30bd355fb27e7600a2b5f3b201ca4e40148e4",
+    "changed_from_source": false
+  },
+  {
+    "path": "01_策略文档/游资策略全套方案-总档案-v6.3.md",
+    "source_sha256": "feeb0c9e61e784f169cfcdda2a8d24a3a2a9ffaf968e00504a2244e9b7bfd4ab",
+    "repo_sha256": "dd09b69c570a0576d17b03cf9754b0b3b066b2a753accdc6adc4e86a34b20ae0",
+    "changed_from_source": true
+  },
+  {
+    "path": "01_策略文档/蒸馏-小众观点储备清单.md",
+    "source_sha256": "bcd69baf2d2c378ad1581fa4d132b36fda2eb808abefa1e377775c99a8767255",
+    "repo_sha256": "bcd69baf2d2c378ad1581fa4d132b36fda2eb808abefa1e377775c99a8767255",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/002股票池修正与基线重跑-2026-07-02.md",
+    "source_sha256": "2a109d407920ea91c08d11fc02f8c43b4e13bec9a4e610be40e683692b4707cc",
+    "repo_sha256": "2a109d407920ea91c08d11fc02f8c43b4e13bec9a4e610be40e683692b4707cc",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/ETF净值对照-2026-07-10.md",
+    "source_sha256": "e95e253d82064a6ba925da11d9f7ecc7c00cbc13f7024b1f80150a5ccbea6a5d",
+    "repo_sha256": "e95e253d82064a6ba925da11d9f7ecc7c00cbc13f7024b1f80150a5ccbea6a5d",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/README.md",
+    "source_sha256": "6e8b8f7952187352cfd01efcc32e733179405748e4ba953e075c343dc9bc0446",
+    "repo_sha256": "6e8b8f7952187352cfd01efcc32e733179405748e4ba953e075c343dc9bc0446",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/backtest_equity_qfq_2019-2023.png",
+    "source_sha256": "02843211c9d5317f180b7959daea77e625a05131dce8ad6b25c71ba015e54b93",
+    "repo_sha256": "02843211c9d5317f180b7959daea77e625a05131dce8ad6b25c71ba015e54b93",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/backtest_equity_qfq_2024-2026.png",
+    "source_sha256": "aebde476e1fcfe4912e0cf0da75bb9ee69e5f2e9b5de9f9c8f8aeeac40430024",
+    "repo_sha256": "aebde476e1fcfe4912e0cf0da75bb9ee69e5f2e9b5de9f9c8f8aeeac40430024",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/backtest_report_qfq_2019-2023.md",
+    "source_sha256": "1be73f3073a901e89a90aa4ee6402f54b3011dfa925033d2e414e0b1cf43dc3d",
+    "repo_sha256": "1be73f3073a901e89a90aa4ee6402f54b3011dfa925033d2e414e0b1cf43dc3d",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/backtest_report_qfq_2024-2026.md",
+    "source_sha256": "40f73a5ba12bc026f47a7654e39d72d822768b7c37ac0ed33e7479115baaefab",
+    "repo_sha256": "40f73a5ba12bc026f47a7654e39d72d822768b7c37ac0ed33e7479115baaefab",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2019-2023.png",
+    "source_sha256": "819f0842533c2edc6ae0ecfa33d66c36abe2bf6995779dfb5a7ba2b1847558d7",
+    "repo_sha256": "819f0842533c2edc6ae0ecfa33d66c36abe2bf6995779dfb5a7ba2b1847558d7",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2019-2023_base-hs300.png",
+    "source_sha256": "1030b566e453bf923b07cb7ec3fea9de55bf50b630e5bd4c63b39b878077b590",
+    "repo_sha256": "1030b566e453bf923b07cb7ec3fea9de55bf50b630e5bd4c63b39b878077b590",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2019-2023_base-strong3.png",
+    "source_sha256": "f60df724d1150e6356acf86af8ee96d3f07165b33db8dd73cff2a277ed28954c",
+    "repo_sha256": "f60df724d1150e6356acf86af8ee96d3f07165b33db8dd73cff2a277ed28954c",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2019-2023_base-strong3_nosat.png",
+    "source_sha256": "3c05eeaace13fa8db4015351999e2439a9829d48655e5a9ba6b5988c9fdd0da9",
+    "repo_sha256": "3c05eeaace13fa8db4015351999e2439a9829d48655e5a9ba6b5988c9fdd0da9",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2019-2023_base-strong3div.png",
+    "source_sha256": "12527c2f29833e2d2cfa74fd771a2f2d60dd8491a93724e08203a1dbaeb0374f",
+    "repo_sha256": "12527c2f29833e2d2cfa74fd771a2f2d60dd8491a93724e08203a1dbaeb0374f",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2019-2023_base-strong3div_nosat.png",
+    "source_sha256": "106f61fe8443c6801bf71932281df30940307e9ecb589debb967db4c5555e0a3",
+    "repo_sha256": "106f61fe8443c6801bf71932281df30940307e9ecb589debb967db4c5555e0a3",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2019-2023_base-strongsec.png",
+    "source_sha256": "3c6a024a576a96bd7cd58d2d87e5812c25abde731a1d85b845f56af3d4861822",
+    "repo_sha256": "3c6a024a576a96bd7cd58d2d87e5812c25abde731a1d85b845f56af3d4861822",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2019-2023_base-strongsec_nosat.png",
+    "source_sha256": "24428b81ff411fb17a2ee113fd98b1a2b089ad2a852422b0042ea26f3c60af2e",
+    "repo_sha256": "24428b81ff411fb17a2ee113fd98b1a2b089ad2a852422b0042ea26f3c60af2e",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2024-2026.png",
+    "source_sha256": "6a680ad61cc3c76de4846daa4e4f3dbb6a767d1eec141902bba5db7a7d37eabb",
+    "repo_sha256": "6a680ad61cc3c76de4846daa4e4f3dbb6a767d1eec141902bba5db7a7d37eabb",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2024-2026_base-hs300.png",
+    "source_sha256": "96cbc0a012658b694c6672462ccff45b659d178d71d49d5ceb21bf2f6299ce43",
+    "repo_sha256": "96cbc0a012658b694c6672462ccff45b659d178d71d49d5ceb21bf2f6299ce43",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2024-2026_base-strong3.png",
+    "source_sha256": "a147c742b472b47d7949580e1dee257e1daa962be8d016f165970472d9903082",
+    "repo_sha256": "a147c742b472b47d7949580e1dee257e1daa962be8d016f165970472d9903082",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2024-2026_base-strong3_nosat.png",
+    "source_sha256": "11479e55e8d4e156575c156144a2df95b00ab1cc253b3c4a17a9c396e84aee87",
+    "repo_sha256": "11479e55e8d4e156575c156144a2df95b00ab1cc253b3c4a17a9c396e84aee87",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2024-2026_base-strong3div.png",
+    "source_sha256": "69206bb51e9b402e57023b7c211f256fc58ed807daf9303c8483171789ed60a3",
+    "repo_sha256": "69206bb51e9b402e57023b7c211f256fc58ed807daf9303c8483171789ed60a3",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2024-2026_base-strong3div_nosat.png",
+    "source_sha256": "5ed4aa278fb131a84c47ac22c02cae5950dd0589174c0450522c5359f24d941e",
+    "repo_sha256": "5ed4aa278fb131a84c47ac22c02cae5950dd0589174c0450522c5359f24d941e",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2024-2026_base-strongsec.png",
+    "source_sha256": "5805181ab62c022c4e9150d6892669f563702c412f4cc48ee5a0c05ea92141e7",
+    "repo_sha256": "5805181ab62c022c4e9150d6892669f563702c412f4cc48ee5a0c05ea92141e7",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_equity_qfq_2024-2026_base-strongsec_nosat.png",
+    "source_sha256": "910ea85f4c0552c365ca920fda4b4b3f22dfa2b3d006b77f9f0dc6ba9183cbc3",
+    "repo_sha256": "910ea85f4c0552c365ca920fda4b4b3f22dfa2b3d006b77f9f0dc6ba9183cbc3",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2019-2023.md",
+    "source_sha256": "d3318668bc1497fa5915b9162a3d7790c99f43dc1b02492dc91faf463d5752b7",
+    "repo_sha256": "d3318668bc1497fa5915b9162a3d7790c99f43dc1b02492dc91faf463d5752b7",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2019-2023_base-hs300.md",
+    "source_sha256": "d842c7a8b6e567aefb8318e525bec8c04911f37b55878ba2f597311b74359c46",
+    "repo_sha256": "d842c7a8b6e567aefb8318e525bec8c04911f37b55878ba2f597311b74359c46",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2019-2023_base-strong3.md",
+    "source_sha256": "9bb49af5e7fbfd7ab68d170286e634c49b9f889055b2fbb25499f9e58eb7b2ce",
+    "repo_sha256": "9bb49af5e7fbfd7ab68d170286e634c49b9f889055b2fbb25499f9e58eb7b2ce",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2019-2023_base-strong3_nosat.md",
+    "source_sha256": "d182e89b70242eed793401219de0787bdaf46dd2f73537a3fa9948f19e3ad46d",
+    "repo_sha256": "d182e89b70242eed793401219de0787bdaf46dd2f73537a3fa9948f19e3ad46d",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2019-2023_base-strong3div.md",
+    "source_sha256": "94da4f37e545e6497de5b0c1b827d7f3b0590ebd9f1760aa9ff2ffe48c9d4199",
+    "repo_sha256": "94da4f37e545e6497de5b0c1b827d7f3b0590ebd9f1760aa9ff2ffe48c9d4199",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2019-2023_base-strong3div_nosat.md",
+    "source_sha256": "93be2434db4f53b81ca4841b4ddbe7d64ddc2f3316c7b93dcab018741007657c",
+    "repo_sha256": "93be2434db4f53b81ca4841b4ddbe7d64ddc2f3316c7b93dcab018741007657c",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2019-2023_base-strongsec.md",
+    "source_sha256": "f75bf9c51f15d9829deca082e71f458deaee19bb870da9a4d1beca79cfe611d2",
+    "repo_sha256": "f75bf9c51f15d9829deca082e71f458deaee19bb870da9a4d1beca79cfe611d2",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2019-2023_base-strongsec_nosat.md",
+    "source_sha256": "829df5077a197a2b3e9a5002032fb9d44f4e6a796137bdc3d5da481b31cc1f5e",
+    "repo_sha256": "829df5077a197a2b3e9a5002032fb9d44f4e6a796137bdc3d5da481b31cc1f5e",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2024-2026.md",
+    "source_sha256": "ede9657c21488c2f3719578a8695fe05a9a59f2b5b7a37a60343767f95ed0dc5",
+    "repo_sha256": "ede9657c21488c2f3719578a8695fe05a9a59f2b5b7a37a60343767f95ed0dc5",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2024-2026_base-hs300.md",
+    "source_sha256": "a075dbe7d50765e04a5838af6d513b2f59ff536c52d56183e27649e8a4a86fe4",
+    "repo_sha256": "a075dbe7d50765e04a5838af6d513b2f59ff536c52d56183e27649e8a4a86fe4",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2024-2026_base-strong3.md",
+    "source_sha256": "d335965cdf28f4b74f07d244856b754e4f4b3e386f094388d07ed9064df3a2ca",
+    "repo_sha256": "d335965cdf28f4b74f07d244856b754e4f4b3e386f094388d07ed9064df3a2ca",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2024-2026_base-strong3_nosat.md",
+    "source_sha256": "229575ecdb9e7ea1cc54177fa89d70b524f1d49ddc7be9c0405d1cba7a6e89d1",
+    "repo_sha256": "229575ecdb9e7ea1cc54177fa89d70b524f1d49ddc7be9c0405d1cba7a6e89d1",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2024-2026_base-strong3div.md",
+    "source_sha256": "e29b7c99cde3cb8e592bead74d83ceee41e843939eacf203a353e666013a3934",
+    "repo_sha256": "e29b7c99cde3cb8e592bead74d83ceee41e843939eacf203a353e666013a3934",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2024-2026_base-strong3div_nosat.md",
+    "source_sha256": "c2d2ec80e41a0e6cb58169551711f94740240d1305931f874076efdf18a6afe3",
+    "repo_sha256": "c2d2ec80e41a0e6cb58169551711f94740240d1305931f874076efdf18a6afe3",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2024-2026_base-strongsec.md",
+    "source_sha256": "d5a8865265a5de84b37e338d2b6c0664b58726a3021e6b65a92bc5f96008434e",
+    "repo_sha256": "d5a8865265a5de84b37e338d2b6c0664b58726a3021e6b65a92bc5f96008434e",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/archive_旧股票池无002_20260702/portfolio_report_qfq_2024-2026_base-strongsec_nosat.md",
+    "source_sha256": "ae351f6d1fd216d03a722c60273b8aaa67800ce9541a2123b60f403f253dc1d5",
+    "repo_sha256": "ae351f6d1fd216d03a722c60273b8aaa67800ce9541a2123b60f403f253dc1d5",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/backtest_equity.png",
+    "source_sha256": "548e63dd1a9c799b38e122f992b7350bfa6f8d96435be96e7d14e9c94e63482c",
+    "repo_sha256": "548e63dd1a9c799b38e122f992b7350bfa6f8d96435be96e7d14e9c94e63482c",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/backtest_equity_qfq_2019-2023.png",
+    "source_sha256": "faa9ca63925a89bd94812499a09daa8aec47cc444e92b80418682645b3bc7013",
+    "repo_sha256": "faa9ca63925a89bd94812499a09daa8aec47cc444e92b80418682645b3bc7013",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/backtest_equity_qfq_2024-2026.png",
+    "source_sha256": "197ec474ad31a3b8591a4e5fae533ed87032110734ec1b814471b85f6c2f2ed0",
+    "repo_sha256": "197ec474ad31a3b8591a4e5fae533ed87032110734ec1b814471b85f6c2f2ed0",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/backtest_report.md",
+    "source_sha256": "dcabce4dcb503bba343d5c291ca38682acc9bcabeebef70a9cfaeec653a2c567",
+    "repo_sha256": "dcabce4dcb503bba343d5c291ca38682acc9bcabeebef70a9cfaeec653a2c567",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/backtest_report_qfq_2019-2023.md",
+    "source_sha256": "44f8fee820c5719f37f41b4273377aaa8a22c6a5bb8f2c91338885987bca43af",
+    "repo_sha256": "44f8fee820c5719f37f41b4273377aaa8a22c6a5bb8f2c91338885987bca43af",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/backtest_report_qfq_2024-2026.md",
+    "source_sha256": "0f31d6b1088850e819f4d71ce95437bb597ef9d1c58a9ae3e80cc48e07953df9",
+    "repo_sha256": "0f31d6b1088850e819f4d71ce95437bb597ef9d1c58a9ae3e80cc48e07953df9",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/experiment_div_base.md",
+    "source_sha256": "9d0c80a923e3887a702f717df7b6e3b97fecd7166aaaf6a0f1d593077428cdc8",
+    "repo_sha256": "9d0c80a923e3887a702f717df7b6e3b97fecd7166aaaf6a0f1d593077428cdc8",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/experiment_e10_survivor.md",
+    "source_sha256": "bbc61c5cc3d0394a49de5cf75459353da820b81be9e9978eed4c8541f0db6b75",
+    "repo_sha256": "bbc61c5cc3d0394a49de5cf75459353da820b81be9e9978eed4c8541f0db6b75",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/experiment_f_top_seats.md",
+    "source_sha256": "646ded4229e0af1c57a7e3a50f3ba12c384fc8444636b6bee8ae24d5bc130b1e",
+    "repo_sha256": "646ded4229e0af1c57a7e3a50f3ba12c384fc8444636b6bee8ae24d5bc130b1e",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/experiment_sector_base.md",
+    "source_sha256": "1a3c30fbdbb07bf058d1c9006d620de15934a32dcc3a74747224df131d6f5287",
+    "repo_sha256": "1a3c30fbdbb07bf058d1c9006d620de15934a32dcc3a74747224df131d6f5287",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/experiment_stop_mode.md",
+    "source_sha256": "8151685592656d45e27017085d48b7df8f01143b8c58fa7d11cf5f5e6173dd48",
+    "repo_sha256": "8151685592656d45e27017085d48b7df8f01143b8c58fa7d11cf5f5e6173dd48",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_qfq_2019-2023.png",
+    "source_sha256": "700a7970ad5fa5949e9785f5a526693d60339159454e40cf49621b0f23855fd7",
+    "repo_sha256": "700a7970ad5fa5949e9785f5a526693d60339159454e40cf49621b0f23855fd7",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_qfq_2019-2023_base-strong3.png",
+    "source_sha256": "e3a77afe01ede01e4d2e914bbb43da745d69dd4c7318152b5efc24ca814ea63a",
+    "repo_sha256": "e3a77afe01ede01e4d2e914bbb43da745d69dd4c7318152b5efc24ca814ea63a",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_qfq_2019-2023_base-strong3_nosat.png",
+    "source_sha256": "3c05eeaace13fa8db4015351999e2439a9829d48655e5a9ba6b5988c9fdd0da9",
+    "repo_sha256": "3c05eeaace13fa8db4015351999e2439a9829d48655e5a9ba6b5988c9fdd0da9",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_qfq_2019-2023_base-strong3div.png",
+    "source_sha256": "556239c3def798a0b6ee1ea42208faf8e5090e06990cafa1982f2395c8358b87",
+    "repo_sha256": "556239c3def798a0b6ee1ea42208faf8e5090e06990cafa1982f2395c8358b87",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_qfq_2019-2023_base-strong3div_nosat.png",
+    "source_sha256": "106f61fe8443c6801bf71932281df30940307e9ecb589debb967db4c5555e0a3",
+    "repo_sha256": "106f61fe8443c6801bf71932281df30940307e9ecb589debb967db4c5555e0a3",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_qfq_2024-2026.png",
+    "source_sha256": "98d9bb52a86e8083cc6a32aa3eeb0c4499254a387a86889e018831e9e0fdd1b5",
+    "repo_sha256": "98d9bb52a86e8083cc6a32aa3eeb0c4499254a387a86889e018831e9e0fdd1b5",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_qfq_2024-2026_base-strong3.png",
+    "source_sha256": "4bc0abf9d36ddddda30348a7078f4d28964bf6560f75ec2aad7f730d77fca038",
+    "repo_sha256": "4bc0abf9d36ddddda30348a7078f4d28964bf6560f75ec2aad7f730d77fca038",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_qfq_2024-2026_base-strong3_nosat.png",
+    "source_sha256": "11479e55e8d4e156575c156144a2df95b00ab1cc253b3c4a17a9c396e84aee87",
+    "repo_sha256": "11479e55e8d4e156575c156144a2df95b00ab1cc253b3c4a17a9c396e84aee87",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_qfq_2024-2026_base-strong3div.png",
+    "source_sha256": "0910559cea2a5401f7ed9a6d6805b2cdb2b27ccc368e4676a386c3a88daf2dec",
+    "repo_sha256": "0910559cea2a5401f7ed9a6d6805b2cdb2b27ccc368e4676a386c3a88daf2dec",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_qfq_2024-2026_base-strong3div_nosat.png",
+    "source_sha256": "5ed4aa278fb131a84c47ac22c02cae5950dd0589174c0450522c5359f24d941e",
+    "repo_sha256": "5ed4aa278fb131a84c47ac22c02cae5950dd0589174c0450522c5359f24d941e",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v641_2019-2023_base.png",
+    "source_sha256": "5ac4d37ef67d78da792731b9c862a58c3dea05b046f489d840063259d503c80f",
+    "repo_sha256": "5ac4d37ef67d78da792731b9c862a58c3dea05b046f489d840063259d503c80f",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v641_2019-2023_satA.png",
+    "source_sha256": "7880360cf17d39b80df89347303523cfd38bde6efe82a76c44382e0a0e11465c",
+    "repo_sha256": "7880360cf17d39b80df89347303523cfd38bde6efe82a76c44382e0a0e11465c",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v641_2019-2023_satC.png",
+    "source_sha256": "389b033d98b0f29a72a18a9c613cc86d58094b2a332525e8e1fec3354771b9e3",
+    "repo_sha256": "389b033d98b0f29a72a18a9c613cc86d58094b2a332525e8e1fec3354771b9e3",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v641_2024-2026_base.png",
+    "source_sha256": "68a51f9ce1ee170e0b4eb8dea322af99ba972bca2c56c8fa78229df501a41e3d",
+    "repo_sha256": "68a51f9ce1ee170e0b4eb8dea322af99ba972bca2c56c8fa78229df501a41e3d",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v641_2024-2026_satA.png",
+    "source_sha256": "0d2c5b09ed7e4d4a2ff78b70a6b1fd0a75b0507c5407fa0b6c0f955dc24147e4",
+    "repo_sha256": "0d2c5b09ed7e4d4a2ff78b70a6b1fd0a75b0507c5407fa0b6c0f955dc24147e4",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v641_2024-2026_satC.png",
+    "source_sha256": "9e88b88ef7e53ad9377ab976176b79e2408217b364c9a83f349decca28d64d33",
+    "repo_sha256": "9e88b88ef7e53ad9377ab976176b79e2408217b364c9a83f349decca28d64d33",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2019-2023_base.png",
+    "source_sha256": "2295a41d456b954fc9d2431caf1e7892cbb1025023d4f4f83f5f61bacbf068ad",
+    "repo_sha256": "2295a41d456b954fc9d2431caf1e7892cbb1025023d4f4f83f5f61bacbf068ad",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2019-2023_base_bpc.png",
+    "source_sha256": "9a1ebcd0e5b8a86c7a231a465576e681ee8b24d3a224af610df255940258e840",
+    "repo_sha256": "9a1ebcd0e5b8a86c7a231a465576e681ee8b24d3a224af610df255940258e840",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2019-2023_base_ph0.png",
+    "source_sha256": "83f9248d589db0da8251f5d964081627331990b43567652318b27f4387699021",
+    "repo_sha256": "83f9248d589db0da8251f5d964081627331990b43567652318b27f4387699021",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2019-2023_base_ph1.png",
+    "source_sha256": "202ea6fb44f50a878fc7f235010f0168693495128bc40cbd60c33b37cc801a7c",
+    "repo_sha256": "202ea6fb44f50a878fc7f235010f0168693495128bc40cbd60c33b37cc801a7c",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2019-2023_base_ph2.png",
+    "source_sha256": "a0d5fbaab56ab17ef7aad547c25ae3b5b7aa30e18fe39e4e3878530a54c0ee4c",
+    "repo_sha256": "a0d5fbaab56ab17ef7aad547c25ae3b5b7aa30e18fe39e4e3878530a54c0ee4c",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2019-2023_base_ph3.png",
+    "source_sha256": "ab0ed5c4cc25acff9f319cc4bf8513eb1a8561c2b68616f5cc1cbd0b8ddce9ed",
+    "repo_sha256": "ab0ed5c4cc25acff9f319cc4bf8513eb1a8561c2b68616f5cc1cbd0b8ddce9ed",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2019-2023_base_ph4.png",
+    "source_sha256": "9997ab6315d62ae224c7341153720840e8e6f69745558d18c2051182a4e3fbb7",
+    "repo_sha256": "9997ab6315d62ae224c7341153720840e8e6f69745558d18c2051182a4e3fbb7",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2019-2023_satA.png",
+    "source_sha256": "d12628de3536bc8172f4a36e969458f83a04c0ff9767149ec39cdf1a1c4e0653",
+    "repo_sha256": "d12628de3536bc8172f4a36e969458f83a04c0ff9767149ec39cdf1a1c4e0653",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2019-2023_satA_bpc.png",
+    "source_sha256": "7ba548f1f58a5f0cbeb9c3477b84cbb6e1231b1970599ad056f8c91a2882c99c",
+    "repo_sha256": "7ba548f1f58a5f0cbeb9c3477b84cbb6e1231b1970599ad056f8c91a2882c99c",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2019-2023_satC.png",
+    "source_sha256": "070fe6a65e32191e1e56709b1a156ec5c676a74f11a5ac27c259a5ad6e05a489",
+    "repo_sha256": "070fe6a65e32191e1e56709b1a156ec5c676a74f11a5ac27c259a5ad6e05a489",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2024-2026_base.png",
+    "source_sha256": "53512902e4726b4b0a74aa63b240405c826926ad041dd5552b7474aea1e05f2d",
+    "repo_sha256": "53512902e4726b4b0a74aa63b240405c826926ad041dd5552b7474aea1e05f2d",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2024-2026_base_bpc.png",
+    "source_sha256": "f4334644aaeaf273f895e0623e076fd78752f374faba08fcb9d8b22da27c8ef6",
+    "repo_sha256": "f4334644aaeaf273f895e0623e076fd78752f374faba08fcb9d8b22da27c8ef6",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2024-2026_base_ph0.png",
+    "source_sha256": "887b8e2867579c66265b36017b0f7e147a35c7a84f3d9b1dc55f65d73d431cb5",
+    "repo_sha256": "887b8e2867579c66265b36017b0f7e147a35c7a84f3d9b1dc55f65d73d431cb5",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2024-2026_base_ph1.png",
+    "source_sha256": "2dba8f6d865123224c376eb35b3991fe8f6c154767668f73cef7ded9631acebc",
+    "repo_sha256": "2dba8f6d865123224c376eb35b3991fe8f6c154767668f73cef7ded9631acebc",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2024-2026_base_ph2.png",
+    "source_sha256": "7f05f785e0d24cd3aaf2319fe10f78af9f83c9f1f105ed5c29e14decf2e524b9",
+    "repo_sha256": "7f05f785e0d24cd3aaf2319fe10f78af9f83c9f1f105ed5c29e14decf2e524b9",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2024-2026_base_ph3.png",
+    "source_sha256": "a110cd489290ce40330ff0e48cad47c975737153e963ab5b85124beec0124a46",
+    "repo_sha256": "a110cd489290ce40330ff0e48cad47c975737153e963ab5b85124beec0124a46",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2024-2026_base_ph4.png",
+    "source_sha256": "8edf776665fa75d617b3e682f88ca6bb76c129b257f2728cec4aef8da661c1a8",
+    "repo_sha256": "8edf776665fa75d617b3e682f88ca6bb76c129b257f2728cec4aef8da661c1a8",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2024-2026_satA.png",
+    "source_sha256": "34d244511311a5e38a07d29a3666b9dbe7f5c24ca22747db54c54936a508b85f",
+    "repo_sha256": "34d244511311a5e38a07d29a3666b9dbe7f5c24ca22747db54c54936a508b85f",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2024-2026_satA_bpc.png",
+    "source_sha256": "28ae4d11083648059a5e36d37b10d75904fc1952b53bf23b1d7e8f06ac651cb1",
+    "repo_sha256": "28ae4d11083648059a5e36d37b10d75904fc1952b53bf23b1d7e8f06ac651cb1",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_equity_v64_2024-2026_satC.png",
+    "source_sha256": "78088b174a7bbb13aa0a84c50d8a067c5cf0e40becebba3b73d827b9988571b6",
+    "repo_sha256": "78088b174a7bbb13aa0a84c50d8a067c5cf0e40becebba3b73d827b9988571b6",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_qfq_2019-2023.md",
+    "source_sha256": "d9e381dac7ac2f05dd0f64c38510d2730e2ff6b5ab3dfd9fc5fff91253c65a4f",
+    "repo_sha256": "d9e381dac7ac2f05dd0f64c38510d2730e2ff6b5ab3dfd9fc5fff91253c65a4f",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_qfq_2019-2023_base-strong3.md",
+    "source_sha256": "0d88bc26ede97b299c3f7d0c732628349125738300654475952e7cba2ef48313",
+    "repo_sha256": "0d88bc26ede97b299c3f7d0c732628349125738300654475952e7cba2ef48313",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_qfq_2019-2023_base-strong3_nosat.md",
+    "source_sha256": "78e47b4bedb26dba314d4c18b72dbbeb10c52f3ea14c1c985aa7d5ce0da8f3c2",
+    "repo_sha256": "78e47b4bedb26dba314d4c18b72dbbeb10c52f3ea14c1c985aa7d5ce0da8f3c2",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_qfq_2019-2023_base-strong3div.md",
+    "source_sha256": "b83a0b3089396716d4439c9398335d8fb546a1ba60e766348bf9f2fe554cdd1d",
+    "repo_sha256": "b83a0b3089396716d4439c9398335d8fb546a1ba60e766348bf9f2fe554cdd1d",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_qfq_2019-2023_base-strong3div_nosat.md",
+    "source_sha256": "219af73bbb22d3777dc63d98f932df593c73d3eb801d003cb4460cb7a6a92392",
+    "repo_sha256": "219af73bbb22d3777dc63d98f932df593c73d3eb801d003cb4460cb7a6a92392",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_qfq_2024-2026.md",
+    "source_sha256": "af948c21da79c1dc37baac35d5cb6965fa4a457086afd8c3bfa00d2b7b17b3c2",
+    "repo_sha256": "af948c21da79c1dc37baac35d5cb6965fa4a457086afd8c3bfa00d2b7b17b3c2",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_qfq_2024-2026_base-strong3.md",
+    "source_sha256": "afe8bb1731a71ba808d434d995eb6c18a16a656467351e4f1a2ffbb1d1b7c4a6",
+    "repo_sha256": "afe8bb1731a71ba808d434d995eb6c18a16a656467351e4f1a2ffbb1d1b7c4a6",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_qfq_2024-2026_base-strong3_nosat.md",
+    "source_sha256": "8108d903890df1bd7f14b776c24cd7716476994d90f5eaade7a533e18fe31cb5",
+    "repo_sha256": "8108d903890df1bd7f14b776c24cd7716476994d90f5eaade7a533e18fe31cb5",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_qfq_2024-2026_base-strong3div.md",
+    "source_sha256": "6429ba1d7707e5b50f1f6066d2573607bf02467cffa4c97c012c50cbd7f2e124",
+    "repo_sha256": "6429ba1d7707e5b50f1f6066d2573607bf02467cffa4c97c012c50cbd7f2e124",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_qfq_2024-2026_base-strong3div_nosat.md",
+    "source_sha256": "47dc2fb33acb3504a6dff7b24e79099c26b5181d338c72a92935ec604c39b75a",
+    "repo_sha256": "47dc2fb33acb3504a6dff7b24e79099c26b5181d338c72a92935ec604c39b75a",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v641_2019-2023_base.md",
+    "source_sha256": "feac4851b0416e0968f0756b1998c24ddc477be5c6ff6f2cdb3e1f7cefdcb5fb",
+    "repo_sha256": "feac4851b0416e0968f0756b1998c24ddc477be5c6ff6f2cdb3e1f7cefdcb5fb",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v641_2019-2023_satA.md",
+    "source_sha256": "597c844e79267e9f1eeb7f3e65abc9c0b701350c9c6d7d0cc6d62d9a30b2e8d1",
+    "repo_sha256": "597c844e79267e9f1eeb7f3e65abc9c0b701350c9c6d7d0cc6d62d9a30b2e8d1",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v641_2019-2023_satC.md",
+    "source_sha256": "ebc2d0068b2c176939b71679f7516afb46bcf1cf194d22999e6485b186c7556e",
+    "repo_sha256": "ebc2d0068b2c176939b71679f7516afb46bcf1cf194d22999e6485b186c7556e",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v641_2024-2026_base.md",
+    "source_sha256": "0deb9f9b02ef191bacbe78c8e0877c7bd2c04a38fddf8037eff6d073c67201ac",
+    "repo_sha256": "0deb9f9b02ef191bacbe78c8e0877c7bd2c04a38fddf8037eff6d073c67201ac",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v641_2024-2026_satA.md",
+    "source_sha256": "7fb1c721e3f4d8b0c6da6332c7b63873c07dcf5360ca80156c9dffcceb97b228",
+    "repo_sha256": "7fb1c721e3f4d8b0c6da6332c7b63873c07dcf5360ca80156c9dffcceb97b228",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v641_2024-2026_satC.md",
+    "source_sha256": "15729c5f29f72c01246c2a887318313478a03afd0c01a3c4da0058e1b0fc93b1",
+    "repo_sha256": "15729c5f29f72c01246c2a887318313478a03afd0c01a3c4da0058e1b0fc93b1",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2019-2023_base.md",
+    "source_sha256": "2741ba362a852541beba3bec018dcd4417dcaa1cdab977367489b07b649a2ac2",
+    "repo_sha256": "2741ba362a852541beba3bec018dcd4417dcaa1cdab977367489b07b649a2ac2",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2019-2023_base_bpc.md",
+    "source_sha256": "58e4434ba556d349627ff258a3e6564b0095a0ba35a60a21f44a04525018c9c8",
+    "repo_sha256": "58e4434ba556d349627ff258a3e6564b0095a0ba35a60a21f44a04525018c9c8",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2019-2023_base_ph0.md",
+    "source_sha256": "06d735d958307bb98cbbb4fffadd22522a6642785cf456331242388c3ba5e4fe",
+    "repo_sha256": "06d735d958307bb98cbbb4fffadd22522a6642785cf456331242388c3ba5e4fe",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2019-2023_base_ph1.md",
+    "source_sha256": "9e124d1f5a414ddd7038ba1733dd8f12323363983b59231f8e7c3ae18d84806a",
+    "repo_sha256": "9e124d1f5a414ddd7038ba1733dd8f12323363983b59231f8e7c3ae18d84806a",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2019-2023_base_ph2.md",
+    "source_sha256": "3c50282d494cc5a3df429ebf26859f4f339b717f6a123ba126acb5e972035800",
+    "repo_sha256": "3c50282d494cc5a3df429ebf26859f4f339b717f6a123ba126acb5e972035800",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2019-2023_base_ph3.md",
+    "source_sha256": "33b4d74d6926e2fbab0b990de2981c47fdc01bb130167f7ccb8af53374a5112b",
+    "repo_sha256": "33b4d74d6926e2fbab0b990de2981c47fdc01bb130167f7ccb8af53374a5112b",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2019-2023_base_ph4.md",
+    "source_sha256": "4548751f55b3b336b34c182e2a61dc9c9c07a15c2fc9001744148a927e136fde",
+    "repo_sha256": "4548751f55b3b336b34c182e2a61dc9c9c07a15c2fc9001744148a927e136fde",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2019-2023_satA.md",
+    "source_sha256": "f1f8837eec114c64a6ab5ae3aa116009f9518e46aefa69c7a16621233a819497",
+    "repo_sha256": "f1f8837eec114c64a6ab5ae3aa116009f9518e46aefa69c7a16621233a819497",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2019-2023_satA_bpc.md",
+    "source_sha256": "2f04237a8775494d950e285a0a12c137fb2847c7b2828cd79ec540bb3173bd67",
+    "repo_sha256": "2f04237a8775494d950e285a0a12c137fb2847c7b2828cd79ec540bb3173bd67",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2019-2023_satC.md",
+    "source_sha256": "cf53202c594abbf80818a368088104475ca68b3c695503d9cbd1fe44ed31090c",
+    "repo_sha256": "cf53202c594abbf80818a368088104475ca68b3c695503d9cbd1fe44ed31090c",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2024-2026_base.md",
+    "source_sha256": "d2d94165a730eace5d22172645d9c38e686ba6a715eda49ae962c0b8e9586d0b",
+    "repo_sha256": "d2d94165a730eace5d22172645d9c38e686ba6a715eda49ae962c0b8e9586d0b",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2024-2026_base_bpc.md",
+    "source_sha256": "89001481c56765f6d1d2d54f58789882717124b9bf433605ea85b73ed1ef7e97",
+    "repo_sha256": "89001481c56765f6d1d2d54f58789882717124b9bf433605ea85b73ed1ef7e97",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2024-2026_base_ph0.md",
+    "source_sha256": "d1b5f071d2c736526ef33fea5273e17064eef255d9031155a909216516ea4b76",
+    "repo_sha256": "d1b5f071d2c736526ef33fea5273e17064eef255d9031155a909216516ea4b76",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2024-2026_base_ph1.md",
+    "source_sha256": "be71e2e0e6e710cf76a54714c8293f1812154f2dad015e46ff5541cb91568871",
+    "repo_sha256": "be71e2e0e6e710cf76a54714c8293f1812154f2dad015e46ff5541cb91568871",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2024-2026_base_ph2.md",
+    "source_sha256": "923cf91d1b23b9284a6269366ed9bac11b56b0f77079ff6674944fa504fa107b",
+    "repo_sha256": "923cf91d1b23b9284a6269366ed9bac11b56b0f77079ff6674944fa504fa107b",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2024-2026_base_ph3.md",
+    "source_sha256": "1feca13b0309cc2021b843b6d3a19b1b39b07e9e01bbd0e48e233085df8428c8",
+    "repo_sha256": "1feca13b0309cc2021b843b6d3a19b1b39b07e9e01bbd0e48e233085df8428c8",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2024-2026_base_ph4.md",
+    "source_sha256": "6d5ebc11a2a3c9cd6e0addf5faf823d5bc9516a43feff3f124914e374657a967",
+    "repo_sha256": "6d5ebc11a2a3c9cd6e0addf5faf823d5bc9516a43feff3f124914e374657a967",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2024-2026_satA.md",
+    "source_sha256": "b2827bad8eaaa46148f6982214e7c3eb10010cb90cb6242692bfc38e49cd2133",
+    "repo_sha256": "b2827bad8eaaa46148f6982214e7c3eb10010cb90cb6242692bfc38e49cd2133",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2024-2026_satA_bpc.md",
+    "source_sha256": "e7be7a91b4e22645210d83f822f50b5e5fe0559a4746601c2929a6c487cf0112",
+    "repo_sha256": "e7be7a91b4e22645210d83f822f50b5e5fe0559a4746601c2929a6c487cf0112",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/portfolio_report_v64_2024-2026_satC.md",
+    "source_sha256": "da3f387d734b437c400220a24f1f50e5310ada0b7873cc3e00c49e9e8aac89aa",
+    "repo_sha256": "da3f387d734b437c400220a24f1f50e5310ada0b7873cc3e00c49e9e8aac89aa",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/v64-一致性修复与重验-预注册-2026-07-10.md",
+    "source_sha256": "78f24b1516b77171ed448d019b6b28113c2952a7caf69e2cf2ea312ba5abf06e",
+    "repo_sha256": "78f24b1516b77171ed448d019b6b28113c2952a7caf69e2cf2ea312ba5abf06e",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/上海老太太候选-竞价行业聚集检验-2026-07-19.md",
+    "source_sha256": "91587345775dcf602af6bd8e5553845d7f06c6a284328904907d37e562f828c3",
+    "repo_sha256": "91587345775dcf602af6bd8e5553845d7f06c6a284328904907d37e562f828c3",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/再入场协议v11-回放-2026-07-19.md",
+    "source_sha256": "b87a55e252eda4a8d2089d40192caacd8f14666b12bba72d6533122c03f24ccf",
+    "repo_sha256": "305a7c5010fe7a221a6b45a3f9f4bdd88c8e05e1784ca3c826d17a913f432fd9",
+    "changed_from_source": true
+  },
+  {
+    "path": "02_回测报告/刘伯涛候选-日历月效应检验-2026-07-19.md",
+    "source_sha256": "65a175364d93752edfd846afa9c4bba44ab113fe25a0705c7091c74d6a5a8025",
+    "repo_sha256": "65a175364d93752edfd846afa9c4bba44ab113fe25a0705c7091c74d6a5a8025",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/前向观察-协议-2026-07-03.md",
+    "source_sha256": "ed893f3468e51aece8d2171596ee5b7b91301aeffce878f92cc3b3459ba35b2e",
+    "repo_sha256": "ed893f3468e51aece8d2171596ee5b7b91301aeffce878f92cc3b3459ba35b2e",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/回撤补仓梯对照-2026-07-20.md",
+    "source_sha256": "377b40d86f9e1b33e5f7cde6732c7a962822687484ff941c28eecfd1d158c145",
+    "repo_sha256": "377b40d86f9e1b33e5f7cde6732c7a962822687484ff941c28eecfd1d158c145",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/回测修正与样本外验证-总结-2026-07-02.md",
+    "source_sha256": "ebe2b4ba0a02233f3eb17389ee93c383d52609d691cda8d3c8d3231cc150b588",
+    "repo_sha256": "ebe2b4ba0a02233f3eb17389ee93c383d52609d691cda8d3c8d3231cc150b588",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/回测全过程详录-2026-07-02.md",
+    "source_sha256": "2adb07b42034ea30a42099f262026c99c7405a23943a2f3419913aae173c2658",
+    "repo_sha256": "2adb07b42034ea30a42099f262026c99c7405a23943a2f3419913aae173c2658",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/大佬透镜语料评估-2026-07-20.md",
+    "source_sha256": "2c12d4d4ed4c8b1e97d0b4e0537ba3c42b7b4263675116c446997dfca3c2664e",
+    "repo_sha256": "2c12d4d4ed4c8b1e97d0b4e0537ba3c42b7b4263675116c446997dfca3c2664e",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/席位性格研究-协议预注册-2026-07-02.md",
+    "source_sha256": "82ea49168105fff0858106921dd4492bcbac19711fc8ff86dbd2181575a80fc8",
+    "repo_sha256": "82ea49168105fff0858106921dd4492bcbac19711fc8ff86dbd2181575a80fc8",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/席位性格研究-结果-2026-07-03.md",
+    "source_sha256": "fcf3c0b1a004b0e5b3f535c5fd57e936993bc2c1a716a098a57510fc7fef63f2",
+    "repo_sha256": "fcf3c0b1a004b0e5b3f535c5fd57e936993bc2c1a716a098a57510fc7fef63f2",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/底仓对照组-2026-07-10.md",
+    "source_sha256": "276949d98aa7d9eac2a55f749241122533469079eaa644368bb6a7369f0b56d9",
+    "repo_sha256": "276949d98aa7d9eac2a55f749241122533469079eaa644368bb6a7369f0b56d9",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/指数事件线-M2预注册-2026-07-19.md",
+    "source_sha256": "b78596ad8ebd37d2ad2aa7443c6824f1faa312d5bfa5162dc59456257f2a0431",
+    "repo_sha256": "b78596ad8ebd37d2ad2aa7443c6824f1faa312d5bfa5162dc59456257f2a0431",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/指数事件线-公告前预测-立项-2026-07-20.md",
+    "source_sha256": "bad10d3939b76f89c91256c014f9a0f52d9cc627674e0bc0987ac149797855c2",
+    "repo_sha256": "bad10d3939b76f89c91256c014f9a0f52d9cc627674e0bc0987ac149797855c2",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/指数调整事件线-立项-2026-07-19.md",
+    "source_sha256": "a517b4b53a05ecb6f30b9d972cc2754f2363e5a0e461f2ea1b013e841324645d",
+    "repo_sha256": "a517b4b53a05ecb6f30b9d972cc2754f2363e5a0e461f2ea1b013e841324645d",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/政策点名行业效应-检验-2026-07-19.md",
+    "source_sha256": "47f887719b48defcd9b687aa76fe1b55521c0cc1ee54328f5cc1d54ff9e6bc27",
+    "repo_sha256": "47f887719b48defcd9b687aa76fe1b55521c0cc1ee54328f5cc1d54ff9e6bc27",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/政策点名行业效应-预注册-2026-07-19.md",
+    "source_sha256": "d4d07571ab18eb773dc80cf63435d18007f7d5e690a3ddb8bc60206d9fae571e",
+    "repo_sha256": "d4d07571ab18eb773dc80cf63435d18007f7d5e690a3ddb8bc60206d9fae571e",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/次新质量成长策略-总结-2026-08-06.md",
+    "source_sha256": "933240e530d41ee553df5be08f90341b2b62bd115d2a4a17ca00f08cb696bcf6",
+    "repo_sha256": "933240e530d41ee553df5be08f90341b2b62bd115d2a4a17ca00f08cb696bcf6",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/次新质量成长策略-结果-2026-08-06.md",
+    "source_sha256": "9fe6b17096254c38f143a3f9d8cc423aade2a64c492c78f71b8be530b32c37db",
+    "repo_sha256": "9fe6b17096254c38f143a3f9d8cc423aade2a64c492c78f71b8be530b32c37db",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/次新质量成长策略-预注册-2026-08-04.md",
+    "source_sha256": "bb4767f112276614004e5eef763d7a899ec431234efb9b703bf881884faeb3b6",
+    "repo_sha256": "bb4767f112276614004e5eef763d7a899ec431234efb9b703bf881884faeb3b6",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/监管异动事件研究-2026-07-02.md",
+    "source_sha256": "04cf1f8fc03ed2b007ea0f2efd69126cca58808c7158fc383430569d0a401bf4",
+    "repo_sha256": "04cf1f8fc03ed2b007ea0f2efd69126cca58808c7158fc383430569d0a401bf4",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/红利策略研究-结果-2026-07-20.md",
+    "source_sha256": "43188c456d3d267a647c2c6f359f239ce55bcb76bdbc4dabe1842cf893eb4f8b",
+    "repo_sha256": "43188c456d3d267a647c2c6f359f239ce55bcb76bdbc4dabe1842cf893eb4f8b",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/红利策略研究-预注册-2026-07-20.md",
+    "source_sha256": "14adf29e2c4aceadfd8d08e22af66dc7f2ab310d03a01d1c266ac03e7e221548",
+    "repo_sha256": "14adf29e2c4aceadfd8d08e22af66dc7f2ab310d03a01d1c266ac03e7e221548",
+    "changed_from_source": false
+  },
+  {
+    "path": "02_回测报告/高股息组合描述性研究-2026-07-19.md",
+    "source_sha256": "d267349c1a8f97a2a342bdbdd455a04e2fddcaab737fefc299d926924537296d",
+    "repo_sha256": "d267349c1a8f97a2a342bdbdd455a04e2fddcaab737fefc299d926924537296d",
+    "changed_from_source": false
+  },
+  {
+    "path": "03_蒸馏汇总/all-distilled-a-share-trading-frameworks.md",
+    "source_sha256": "87a2669cf5f72bdb84a25afbcb499afe9bd24897e0b4f443898581cbe1ff7dfc",
+    "repo_sha256": "87a2669cf5f72bdb84a25afbcb499afe9bd24897e0b4f443898581cbe1ff7dfc",
+    "changed_from_source": false
+  },
+  {
+    "path": "03_蒸馏汇总/danshi-channel-last-month-full-subtitles-2026-07-12.md",
+    "source_sha256": "a5b50f39d7d9b7866389717d226f4767733c29f615faa8b0d263047a60ab1e54",
+    "repo_sha256": "a5b50f39d7d9b7866389717d226f4767733c29f615faa8b0d263047a60ab1e54",
+    "changed_from_source": false
+  },
+  {
+    "path": "03_蒸馏汇总/junxianzhihua-chip-peak-four-lessons-nblm-original-distillation-2026-07-03.md",
+    "source_sha256": "d0261667063d2e2944b8861225d78303112b7a5a1121e1ec900b15f94328e6df",
+    "repo_sha256": "d0261667063d2e2944b8861225d78303112b7a5a1121e1ec900b15f94328e6df",
+    "changed_from_source": false
+  },
+  {
+    "path": "03_蒸馏汇总/junxianzhihua-distillation-complete-compendium-2026-07-05.md",
+    "source_sha256": "73856a662a312d97683ef9aad94d9812cb41c59e80aa08617f99e557e6938399",
+    "repo_sha256": "73856a662a312d97683ef9aad94d9812cb41c59e80aa08617f99e557e6938399",
+    "changed_from_source": false
+  },
+  {
+    "path": "03_蒸馏汇总/交易心法蒸馏-2026-06-24.md",
+    "source_sha256": "be4745020d817322a7dff6263d25e329a77323a3680f3ef8c0cbc88486f8c429",
+    "repo_sha256": "be4745020d817322a7dff6263d25e329a77323a3680f3ef8c0cbc88486f8c429",
+    "changed_from_source": false
+  },
+  {
+    "path": "03_蒸馏汇总/大佬透镜-2026投资大佬观点-蒸馏结果完整总汇总-2026-07-20.md",
+    "source_sha256": "d7d324a1b9ca10c4727087f85a3603912ad780006259c1725fac2e39227cb178",
+    "repo_sha256": "d7d324a1b9ca10c4727087f85a3603912ad780006259c1725fac2e39227cb178",
+    "changed_from_source": false
+  },
+  {
+    "path": "03_蒸馏汇总/深度蒸馏1.md",
+    "source_sha256": "795f9300c49e89895639a5ed115647f302696fcde796f6694920c48019e310d3",
+    "repo_sha256": "795f9300c49e89895639a5ed115647f302696fcde796f6694920c48019e310d3",
+    "changed_from_source": false
+  },
+  {
+    "path": "03_蒸馏汇总/深度蒸馏2.md",
+    "source_sha256": "ab4178f5b630c623cdbcbf575726a223d064d10405a1baa17ef827e02764a86e",
+    "repo_sha256": "ab4178f5b630c623cdbcbf575726a223d064d10405a1baa17ef827e02764a86e",
+    "changed_from_source": false
+  },
+  {
+    "path": "03_蒸馏汇总/深度蒸馏3.md",
+    "source_sha256": "dd8bed89f7fee438bfc83f71c932845cd88bdd94268aff277e4d948327690041",
+    "repo_sha256": "dd8bed89f7fee438bfc83f71c932845cd88bdd94268aff277e4d948327690041",
+    "changed_from_source": false
+  },
+  {
+    "path": "03_蒸馏汇总/深度蒸馏4.md",
+    "source_sha256": "e542a3c86516e0248971c3bcec652dc9a9d7d706179b0da01eaeecded005f8dc",
+    "repo_sha256": "e542a3c86516e0248971c3bcec652dc9a9d7d706179b0da01eaeecded005f8dc",
+    "changed_from_source": false
+  },
+  {
+    "path": "03_蒸馏汇总/深度蒸馏5.md",
+    "source_sha256": "786d53940704e94ce76a2a175fa0a0a283490d0043112facadf8f50b4d3abbce",
+    "repo_sha256": "786d53940704e94ce76a2a175fa0a0a283490d0043112facadf8f50b4d3abbce",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/aguzuoshou-channel-backfill-new-entries-summary_1.md",
+    "source_sha256": "13fa50aede856710c4f32a19cb200e3f5e93bbd30bf044079ca09594b4846d01",
+    "repo_sha256": "13fa50aede856710c4f32a19cb200e3f5e93bbd30bf044079ca09594b4846d01",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/aguzuoshou-channel-backfill-new-entries-summary_2.md",
+    "source_sha256": "a26955a86ced6f85bcbc5bbd509ed0661098bd005f56efd098e4f8b676ed5eb2",
+    "repo_sha256": "a26955a86ced6f85bcbc5bbd509ed0661098bd005f56efd098e4f8b676ed5eb2",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/tail-session-stock-selection-youtube-research-2026-06-20.md",
+    "source_sha256": "8eece1539aeeb356be0f0b26fde2bcd267c539e736e69f5ee9200e29ba391089",
+    "repo_sha256": "8eece1539aeeb356be0f0b26fde2bcd267c539e736e69f5ee9200e29ba391089",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-channel-nblm-distillation-summary_3.md",
+    "source_sha256": "6c161612f0e0374d45bc1b84d566fc3a6be2996dce49a0da3639f69d1ad0a06d",
+    "repo_sha256": "6c161612f0e0374d45bc1b84d566fc3a6be2996dce49a0da3639f69d1ad0a06d",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-first20-raw.md",
+    "source_sha256": "87c9d6016d446ef4cc1c5b73976cda185d4683cda507220767df3bbce5e4f13c",
+    "repo_sha256": "87c9d6016d446ef4cc1c5b73976cda185d4683cda507220767df3bbce5e4f13c",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-first20-strategy-framework.md",
+    "source_sha256": "c0b480279cfb23a4f7651e9ddacd3ef6c7ab3c7a774cb6be5809f488a17b9be6",
+    "repo_sha256": "c0b480279cfb23a4f7651e9ddacd3ef6c7ab3c7a774cb6be5809f488a17b9be6",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-long-videos-deep-dive-raw.md",
+    "source_sha256": "186f4c7bcbcbbea07e091d001e19af703bba21712d7cce40c9ffb9bb3d5f8793",
+    "repo_sha256": "186f4c7bcbcbbea07e091d001e19af703bba21712d7cce40c9ffb9bb3d5f8793",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-01-管住手-北京炒家-raw.md",
+    "source_sha256": "01edfc002a7ce538a9e973bda56ed22076731191ce6bfa44542362083eaf92c9",
+    "repo_sha256": "01edfc002a7ce538a9e973bda56ed22076731191ce6bfa44542362083eaf92c9",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-02-evidence-patch.md",
+    "source_sha256": "0e14b2504dc8fe4607361bcb2b72737b5704229040e6cbf4319022d9c001a727",
+    "repo_sha256": "0e14b2504dc8fe4607361bcb2b72737b5704229040e6cbf4319022d9c001a727",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-02-牵牛哥-北京炒家0410-raw.md",
+    "source_sha256": "c148c58183465de8a1213bf85c8536cfaea9f479d658cfb576a6a3be26c21d5f",
+    "repo_sha256": "c148c58183465de8a1213bf85c8536cfaea9f479d658cfb576a6a3be26c21d5f",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-03A-2025七倍上-raw.md",
+    "source_sha256": "1467cf253ccc97aa7246b56dcbfb507d3d39499c097336676a733570f9eeb39f",
+    "repo_sha256": "1467cf253ccc97aa7246b56dcbfb507d3d39499c097336676a733570f9eeb39f",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-03B-2025七倍下-raw.md",
+    "source_sha256": "d526413c2199e053aa67784c3690e56680d55054a6874e9a9a84416f0388bcce",
+    "repo_sha256": "d526413c2199e053aa67784c3690e56680d55054a6874e9a9a84416f0388bcce",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-04A-我是会发光的男人-raw.md",
+    "source_sha256": "0925ff064fb346b2779b8ecc531a575d4fa2c20708486856e906f43ee4daf768",
+    "repo_sha256": "0925ff064fb346b2779b8ecc531a575d4fa2c20708486856e906f43ee4daf768",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-04B-飘忽之间战争题材-raw.md",
+    "source_sha256": "a38c6913094f912f7c7a302f6953259cc8e42970a3c1dc036de5accfcf63497e",
+    "repo_sha256": "a38c6913094f912f7c7a302f6953259cc8e42970a3c1dc036de5accfcf63497e",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-05A-鄂华少情绪核心流下-raw.md",
+    "source_sha256": "14159a012c6ad6165d69e2946f71288a1203b554fd1c913fbc70f88f6306d294",
+    "repo_sha256": "14159a012c6ad6165d69e2946f71288a1203b554fd1c913fbc70f88f6306d294",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-05B-不确定中寻找确定性-raw.md",
+    "source_sha256": "8829330c66e589ed8ffacbc452029764f25a5ddde26b7823fe43679e459a9a3a",
+    "repo_sha256": "8829330c66e589ed8ffacbc452029764f25a5ddde26b7823fe43679e459a9a3a",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-05C-战略定力-raw.md",
+    "source_sha256": "021ebfbb6767e473d1fbb311f52ad152d6a90a2df6b562dd5582f21c271cd700",
+    "repo_sha256": "021ebfbb6767e473d1fbb311f52ad152d6a90a2df6b562dd5582f21c271cd700",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-06A-小彬彬波段2-raw.md",
+    "source_sha256": "335c19ada564e33324d497d0abfb21efa8b488cab6495a3f3757f69d3f897ceb",
+    "repo_sha256": "335c19ada564e33324d497d0abfb21efa8b488cab6495a3f3757f69d3f897ceb",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-06B-博古通今行情模式匹配-raw.md",
+    "source_sha256": "53cd86341cc689ecef5a3fc99e38d48f0c498a9b201bde75c2b0af0ccd82c399",
+    "repo_sha256": "53cd86341cc689ecef5a3fc99e38d48f0c498a9b201bde75c2b0af0ccd82c399",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-06C-刘逸铭龙模式-raw.md",
+    "source_sha256": "db6a277141449be379284b07921e99c808aac79ed94a0d8eae229ee2fcc049b5",
+    "repo_sha256": "db6a277141449be379284b07921e99c808aac79ed94a0d8eae229ee2fcc049b5",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-06D-牵牛哥股票贴标签-raw.md",
+    "source_sha256": "912b48ef5195e70d1528825e457fb5bf668b845750fdcf0b081210f54fb6fb7f",
+    "repo_sha256": "912b48ef5195e70d1528825e457fb5bf668b845750fdcf0b081210f54fb6fb7f",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-06E-小彬彬波段1-raw.md",
+    "source_sha256": "15de17ffb57dd37d25be7fddefd8fa684389ca0ec323acdb46ec5488b0f1009b",
+    "repo_sha256": "15de17ffb57dd37d25be7fddefd8fa684389ca0ec323acdb46ec5488b0f1009b",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-06F-三川万里红上-raw.md",
+    "source_sha256": "5a210848319e446f29b01841183678ea2e4b45421b453a8f15a74ac345ba97be",
+    "repo_sha256": "5a210848319e446f29b01841183678ea2e4b45421b453a8f15a74ac345ba97be",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-06G-三川万里红二-raw.md",
+    "source_sha256": "4bae29ceeeb91dcf47a121f89e3e797b2590cbe44924bb6c7e7718866c035a1f",
+    "repo_sha256": "4bae29ceeeb91dcf47a121f89e3e797b2590cbe44924bb6c7e7718866c035a1f",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-06H-国企省公司二-raw.md",
+    "source_sha256": "9b310d5923b6ff798025e20824b552800e87a5a707a8d8c6c49a1614fc056768",
+    "repo_sha256": "9b310d5923b6ff798025e20824b552800e87a5a707a8d8c6c49a1614fc056768",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-06I-黑到被嫌弃二-raw.md",
+    "source_sha256": "56a790ac1d7b6dc4d7f7ac724f23017ce82e82e2535a91a8176b4fa84a6b6cce",
+    "repo_sha256": "56a790ac1d7b6dc4d7f7ac724f23017ce82e82e2535a91a8176b4fa84a6b6cce",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-small-batch-protocol.md",
+    "source_sha256": "07e70af60a0569f5a3f1e3e7e2e46669e07035b311f1ce2cd1ced68f48ff3780",
+    "repo_sha256": "07e70af60a0569f5a3f1e3e7e2e46669e07035b311f1ce2cd1ced68f48ff3780",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/youzi168-nblm-source-queue.md",
+    "source_sha256": "3f9b9643e547a1c7dc3668a86977708c452a482f5943ba03afe277c26a87f179",
+    "repo_sha256": "3f9b9643e547a1c7dc3668a86977708c452a482f5943ba03afe277c26a87f179",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/上海老太太_小红书字幕蒸馏_2026-07-19/README.md",
+    "source_sha256": "87f600a14afaebb420c225dcfcf5e5aad2f68bfe0e6edeabea656ace4414ddf9",
+    "repo_sha256": "87f600a14afaebb420c225dcfcf5e5aad2f68bfe0e6edeabea656ace4414ddf9",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/上海老太太_小红书字幕蒸馏_2026-07-19/all_transcripts.md",
+    "source_sha256": "ad1056b293824057c8e1fbe24acdaf5429d53f74e94e11fa2fe31a2977b9bd99",
+    "repo_sha256": "ad1056b293824057c8e1fbe24acdaf5429d53f74e94e11fa2fe31a2977b9bd99",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/上海老太太_小红书字幕蒸馏_2026-07-19/download_missing_media.mjs",
+    "source_sha256": "c492fa8e70ec0f48727d578cea9f585cd58e925f5980bfc5f398eb5280497c23",
+    "repo_sha256": "c492fa8e70ec0f48727d578cea9f585cd58e925f5980bfc5f398eb5280497c23",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/上海老太太_小红书字幕蒸馏_2026-07-19/download_note_images.mjs",
+    "source_sha256": "4c1b9c56fa448d183df4c02e67ee899508ea01f0c19ec948d573964aba7b3ba6",
+    "repo_sha256": "4c1b9c56fa448d183df4c02e67ee899508ea01f0c19ec948d573964aba7b3ba6",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/上海老太太_小红书字幕蒸馏_2026-07-19/fetch_report.md",
+    "source_sha256": "b5f90d109142ddda69ba1b6f91a0a6993c9fd17a7ab9aa55fac9d8b2b9fc871d",
+    "repo_sha256": "b5f90d109142ddda69ba1b6f91a0a6993c9fd17a7ab9aa55fac9d8b2b9fc871d",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/上海老太太_小红书字幕蒸馏_2026-07-19/fetch_xhs_subtitles.mjs",
+    "source_sha256": "bd03495f632c4cd15185aa825008180087a8e62550c86baa1befada13299939e",
+    "repo_sha256": "bd03495f632c4cd15185aa825008180087a8e62550c86baa1befada13299939e",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/上海老太太_小红书字幕蒸馏_2026-07-19/verification_report.md",
+    "source_sha256": "f84a8d4a5c25a6a5cebfad4efa87b9d8c8a54089dc35a53ec5d933b979ccd4da",
+    "repo_sha256": "f84a8d4a5c25a6a5cebfad4efa87b9d8c8a54089dc35a53ec5d933b979ccd4da",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/上海老太太_小红书字幕蒸馏_2026-07-19/verify_outputs.mjs",
+    "source_sha256": "62befb9667de1f0a02f44716e7390fb69cc2cbd141d9b593d20ecd7e090481a1",
+    "repo_sha256": "62befb9667de1f0a02f44716e7390fb69cc2cbd141d9b593d20ecd7e090481a1",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/上海老太太_小红书字幕蒸馏_2026-07-19/蒸馏报告.md",
+    "source_sha256": "025d13a9636482a4ed0e8631a80b41223f626c386d092dacd4d8bb0bcee4786b",
+    "repo_sha256": "025d13a9636482a4ed0e8631a80b41223f626c386d092dacd4d8bb0bcee4786b",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/刘伯涛财富_小红书字幕蒸馏_2026-07-19/README.md",
+    "source_sha256": "bb1ecd625c4f3e7a102c3792747aa48917bc5c5242c7563cfd48cf4559e4f32a",
+    "repo_sha256": "bb1ecd625c4f3e7a102c3792747aa48917bc5c5242c7563cfd48cf4559e4f32a",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/刘伯涛财富_小红书字幕蒸馏_2026-07-19/all_transcripts.md",
+    "source_sha256": "65c38c61157a611c41a6e91edcab80fab19155c66014987890ab896ac08ca857",
+    "repo_sha256": "65c38c61157a611c41a6e91edcab80fab19155c66014987890ab896ac08ca857",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/刘伯涛财富_小红书字幕蒸馏_2026-07-19/fetch_report.md",
+    "source_sha256": "1fa463c1217755c2f65ee5fb506aa104938740fe1b16e53e391a82f557a0e48f",
+    "repo_sha256": "1fa463c1217755c2f65ee5fb506aa104938740fe1b16e53e391a82f557a0e48f",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/刘伯涛财富_小红书字幕蒸馏_2026-07-19/fetch_xhs_subtitles.mjs",
+    "source_sha256": "94ede08a82b5ec30d265b720116d1c15120a770f60d4f117caefea942ed66725",
+    "repo_sha256": "94ede08a82b5ec30d265b720116d1c15120a770f60d4f117caefea942ed66725",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/刘伯涛财富_小红书字幕蒸馏_2026-07-19/verification_report.md",
+    "source_sha256": "35b9769c9cf8030308b01e44cba254b36085437c4ae40b0b839e1f087e7a5ad9",
+    "repo_sha256": "35b9769c9cf8030308b01e44cba254b36085437c4ae40b0b839e1f087e7a5ad9",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/刘伯涛财富_小红书字幕蒸馏_2026-07-19/verify_outputs.mjs",
+    "source_sha256": "f1b08f05399278ace4924c9b7e8a4ac79ba6ab37bf3fffe33e15430b1e14646a",
+    "repo_sha256": "f1b08f05399278ace4924c9b7e8a4ac79ba6ab37bf3fffe33e15430b1e14646a",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/刘伯涛财富_小红书字幕蒸馏_2026-07-19/蒸馏报告.md",
+    "source_sha256": "1a08aae190a5162e2bc7ca161365116c57180f3ed0af209542adc04d0ce9fce5",
+    "repo_sha256": "1a08aae190a5162e2bc7ca161365116c57180f3ed0af209542adc04d0ce9fce5",
+    "changed_from_source": false
+  },
+  {
+    "path": "04_原始研究材料/大佬透镜-2026投资大佬观点-蒸馏结果完整总汇总-2026-07-20.md",
+    "source_sha256": "d7d324a1b9ca10c4727087f85a3603912ad780006259c1725fac2e39227cb178",
+    "repo_sha256": "d7d324a1b9ca10c4727087f85a3603912ad780006259c1725fac2e39227cb178",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/00-量化候选池.md",
+    "source_sha256": "9dbe128f50bbf12ed34d857981fa0ab46fb0eee298c13b3e8c725834bb5e6449",
+    "repo_sha256": "9dbe128f50bbf12ed34d857981fa0ab46fb0eee298c13b3e8c725834bb5e6449",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/01-方法与判定标准.md",
+    "source_sha256": "54933df351f8f04f645c0750e1c744f7610ffd5591b378dc7659e75b6b99f2db",
+    "repo_sha256": "54933df351f8f04f645c0750e1c744f7610ffd5591b378dc7659e75b6b99f2db",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/02-核心复盘队列.md",
+    "source_sha256": "e7afba623a17126e930903c4f58fcb2c726c5cdf703d33e3897a0f3949e8fce2",
+    "repo_sha256": "e7afba623a17126e930903c4f58fcb2c726c5cdf703d33e3897a0f3949e8fce2",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/03-2022第一批逐股复盘.md",
+    "source_sha256": "157b426a83649f7f2dddc9c6b92f1094eaef1f8fab65f672f9a7db0575c58cd5",
+    "repo_sha256": "157b426a83649f7f2dddc9c6b92f1094eaef1f8fab65f672f9a7db0575c58cd5",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/04-来源索引.md",
+    "source_sha256": "039744a4cf9d17ad33e61556fed9f7f017ab4b6b1c637c3567b70714c4ad13bd",
+    "repo_sha256": "039744a4cf9d17ad33e61556fed9f7f017ab4b6b1c637c3567b70714c4ad13bd",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/05-2023逐股深度复盘.md",
+    "source_sha256": "513f5ea6a2372522c6a8fddf355636de2b9b93d20ee5b132388cec7853166be2",
+    "repo_sha256": "513f5ea6a2372522c6a8fddf355636de2b9b93d20ee5b132388cec7853166be2",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/06-2022逐股深度复盘.md",
+    "source_sha256": "30f2ebd95815d6b95ddbf5702ab9e3aa2bc168a2ef256f29b6bf1b3b8903d687",
+    "repo_sha256": "30f2ebd95815d6b95ddbf5702ab9e3aa2bc168a2ef256f29b6bf1b3b8903d687",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/07-2024逐股深度复盘.md",
+    "source_sha256": "9102ee467432108c43b0a8e00abceb20c8e56f37549fbadc58929659b8c97208",
+    "repo_sha256": "9102ee467432108c43b0a8e00abceb20c8e56f37549fbadc58929659b8c97208",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/08-2025逐股深度复盘.md",
+    "source_sha256": "7b70f48364e73c99f8cc4fd7cb12a1d0ecd17aeacde5584f7ec627f3d1f7661f",
+    "repo_sha256": "7b70f48364e73c99f8cc4fd7cb12a1d0ecd17aeacde5584f7ec627f3d1f7661f",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/09-2026YTD逐股深度复盘.md",
+    "source_sha256": "a77736e2aa533e052103271f2347c85d3b4993feb96750f7390c4a44adef92bd",
+    "repo_sha256": "a77736e2aa533e052103271f2347c85d3b4993feb96750f7390c4a44adef92bd",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/10-四年总地图与跨年度规律.md",
+    "source_sha256": "215e787f2d2ab4a9db53e4bc9720cc1df79d7c595dd549521789b60fb6132268",
+    "repo_sha256": "215e787f2d2ab4a9db53e4bc9720cc1df79d7c595dd549521789b60fb6132268",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/11-191项终验清单.md",
+    "source_sha256": "a6a7d0ded88c18eeb111727c3238c5cb74479f97dc2d0957dd93a961e47148e1",
+    "repo_sha256": "a6a7d0ded88c18eeb111727c3238c5cb74479f97dc2d0957dd93a961e47148e1",
+    "changed_from_source": false
+  },
+  {
+    "path": "4年妖股/12-跨年度重复成妖标的清单.md",
+    "source_sha256": "b6b7bca3059229d538f27d93bc1d9f27fe44e8158e2ffbfd83a67f27c362bdac",
+    "repo_sha256": "b6b7bca3059229d538f27d93bc1d9f27fe44e8158e2ffbfd83a67f27c362bdac",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股短线波段操作助手.html",
+    "source_sha256": "e6476d02af5a8d30ea80284c4cbf738a1920d16c23136e2e99151edd1ccf8f54",
+    "repo_sha256": "e6476d02af5a8d30ea80284c4cbf738a1920d16c23136e2e99151edd1ccf8f54",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/Alpha审计_20260719/alpha_validation_audit.py",
+    "source_sha256": "3028284cf978070a9928a987fe83a92de8237b0278f1e8cc4777215df257df5f",
+    "repo_sha256": "3028284cf978070a9928a987fe83a92de8237b0278f1e8cc4777215df257df5f",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/Alpha审计_20260719/alpha_validation_report.md",
+    "source_sha256": "6d37fa2f25c36cb0d73fca84fde1e6701737b57180cc6f0e14092e6dfe8c67f4",
+    "repo_sha256": "6d37fa2f25c36cb0d73fca84fde1e6701737b57180cc6f0e14092e6dfe8c67f4",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/Alpha审计_20260719/下一阶段Alpha预注册方案.md",
+    "source_sha256": "ed5e4868f94d73a895287e0d5897063c2a8354c1582c2e71b0cfa1bf95e01016",
+    "repo_sha256": "ed5e4868f94d73a895287e0d5897063c2a8354c1582c2e71b0cfa1bf95e01016",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/Alpha审计_20260719/代码改进记录_影子账本v2.md",
+    "source_sha256": "32ff082f09965d23df833221a4e8fdbbbce01b2edee87df8e22617dc1834e9b1",
+    "repo_sha256": "32ff082f09965d23df833221a4e8fdbbbce01b2edee87df8e22617dc1834e9b1",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/Claude复核报告-2026-07-03.md",
+    "source_sha256": "31b84b2fe428e621544bdebb0929b8389ff112a28bf3cab38fde3a2d3b953708",
+    "repo_sha256": "31b84b2fe428e621544bdebb0929b8389ff112a28bf3cab38fde3a2d3b953708",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/Codex Alpha 组合实验摘要.md",
+    "source_sha256": "78c82fff2f8652988f498995da465cd59c19ec302532423487e163a78f05a1d0",
+    "repo_sha256": "78c82fff2f8652988f498995da465cd59c19ec302532423487e163a78f05a1d0",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/Codex更高Alpha策略研究与回测.md",
+    "source_sha256": "28daa0c68057c663d1f55dd2ed463b97d6056a03d6fc30e7ffec1424090ba73d",
+    "repo_sha256": "28daa0c68057c663d1f55dd2ed463b97d6056a03d6fc30e7ffec1424090ba73d",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/codex_alpha_portfolio_experiment.py",
+    "source_sha256": "f3e8781755890667b3f719d1eb595c5fbf4834760c866f72c86c0d67f7281af0",
+    "repo_sha256": "f3e8781755890667b3f719d1eb595c5fbf4834760c866f72c86c0d67f7281af0",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/portfolio_report_codex_alpha_2019-2023_base-strong3.md",
+    "source_sha256": "fc9f54c736ab919b8c8e6b1882cbdf77e2326a75a7bb83b50a8db0b5bb06f9c0",
+    "repo_sha256": "fc9f54c736ab919b8c8e6b1882cbdf77e2326a75a7bb83b50a8db0b5bb06f9c0",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/portfolio_report_codex_alpha_2024-2026_base-strong3.md",
+    "source_sha256": "96c8e0e5f1e990780260fec18d12aecb4a4c24d10d2efd4ec1c67988ab804507",
+    "repo_sha256": "96c8e0e5f1e990780260fec18d12aecb4a4c24d10d2efd4ec1c67988ab804507",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/复核_正典缓存/portfolio_report_verify_codexAonly_2019-2023_base-strong3.md",
+    "source_sha256": "ea54cdb3cd1cf306285b2eb6c08cbce256c2be76c0f7bf66490b7f7fc1c21be4",
+    "repo_sha256": "ea54cdb3cd1cf306285b2eb6c08cbce256c2be76c0f7bf66490b7f7fc1c21be4",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/复核_正典缓存/portfolio_report_verify_codexAonly_2024-2026_base-strong3.md",
+    "source_sha256": "b304cb6ec7c4423704e2a04bcf9b9320076d2671dd31c2f4ad751296eddaea47",
+    "repo_sha256": "b304cb6ec7c4423704e2a04bcf9b9320076d2671dd31c2f4ad751296eddaea47",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/复核_正典缓存/portfolio_report_verify_codex_2019-2023_base-strong3.md",
+    "source_sha256": "90b939b1d749ff789fec77f96d8765c27ee764b7f9eec23d41b8b4eed30cf087",
+    "repo_sha256": "90b939b1d749ff789fec77f96d8765c27ee764b7f9eec23d41b8b4eed30cf087",
+    "changed_from_source": false
+  },
+  {
+    "path": "A股策略Codex/复核_正典缓存/portfolio_report_verify_codex_2024-2026_base-strong3.md",
+    "source_sha256": "75965612ed00746485cea8a665cd865b955ad7919b55219e8c49da8e4a753b17",
+    "repo_sha256": "75965612ed00746485cea8a665cd865b955ad7919b55219e8c49da8e4a753b17",
+    "changed_from_source": false
+  },
+  {
+    "path": "README_目录说明.md",
+    "source_sha256": "b13bd7823154dd0e131bff9d23aacaa7e90f23a51e4ce4fd1539d93199bc8ee6",
+    "repo_sha256": "b13bd7823154dd0e131bff9d23aacaa7e90f23a51e4ce4fd1539d93199bc8ee6",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/.gitignore",
+    "source_sha256": "320c7bd59e13b38913fd292f0ef3027ac94005d44e0d95cb53f533e8ec0b36f0",
+    "repo_sha256": "320c7bd59e13b38913fd292f0ef3027ac94005d44e0d95cb53f533e8ec0b36f0",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/CLAUDE.md",
+    "source_sha256": "6aa1f0bc99b71667e085fdd3a76f7b0329a92b626b2509d0f0e6a6e97f29a273",
+    "repo_sha256": "6df92b42fc1c5efcde574cacca4e374219376c3c56e554b802aaf7a0f9ce036e",
+    "changed_from_source": true
+  },
+  {
+    "path": "数据助手/README_数据接入说明.md",
+    "source_sha256": "27939a9b2377d922d875f38aae10239be1a126bfb204db4728d4716dfc698fed",
+    "repo_sha256": "50847b717b1fe9336be7324f66f4e1de2159f225e16a28d3d302f154cef47c45",
+    "changed_from_source": true
+  },
+  {
+    "path": "数据助手/backtest.py",
+    "source_sha256": "58027d745d071547f4e535da95320c2db1591d5766fb0bd94188ce71d1568d3c",
+    "repo_sha256": "58027d745d071547f4e535da95320c2db1591d5766fb0bd94188ce71d1568d3c",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/docs/Alpha审计_20260719/下一阶段Alpha预注册方案.md",
+    "source_sha256": "ed5e4868f94d73a895287e0d5897063c2a8354c1582c2e71b0cfa1bf95e01016",
+    "repo_sha256": "ed5e4868f94d73a895287e0d5897063c2a8354c1582c2e71b0cfa1bf95e01016",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/docs/Alpha审计_20260719/代码改进记录_影子账本v2.md",
+    "source_sha256": "32ff082f09965d23df833221a4e8fdbbbce01b2edee87df8e22617dc1834e9b1",
+    "repo_sha256": "32ff082f09965d23df833221a4e8fdbbbce01b2edee87df8e22617dc1834e9b1",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/experiment_e10_survivor.py",
+    "source_sha256": "8d9aa3639f7efb5a4db78daa933d516e75aea99d631c3086e8ddf6027abce139",
+    "repo_sha256": "8d9aa3639f7efb5a4db78daa933d516e75aea99d631c3086e8ddf6027abce139",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/experiment_f_top_seats.py",
+    "source_sha256": "5f9865733b58b668a86bdbf19422d9f8541bdd093666f29b19e9cd0a30dba1aa",
+    "repo_sha256": "5f9865733b58b668a86bdbf19422d9f8541bdd093666f29b19e9cd0a30dba1aa",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/experiment_regulation_event.py",
+    "source_sha256": "5cd5d626a763dceaff4bc4158e81d541428256691711fb1c0f8a39aef2b53bfe",
+    "repo_sha256": "5cd5d626a763dceaff4bc4158e81d541428256691711fb1c0f8a39aef2b53bfe",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/experiment_stop_mode.py",
+    "source_sha256": "d162c33bbb814cd9047ebcdd022ca406977cc7cf811a1644d77f83711862925b",
+    "repo_sha256": "d162c33bbb814cd9047ebcdd022ca406977cc7cf811a1644d77f83711862925b",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/pipeline.py",
+    "source_sha256": "464ed5b7ce1d60139c22e6ee8673530f80faa1204dea5f74d499f59ba3ba010e",
+    "repo_sha256": "464ed5b7ce1d60139c22e6ee8673530f80faa1204dea5f74d499f59ba3ba010e",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/portfolio_backtest.py",
+    "source_sha256": "f68774eeb37afd6330d85aebd243c7ed01a5031171cff3eb569f096fd332be72",
+    "repo_sha256": "f68774eeb37afd6330d85aebd243c7ed01a5031171cff3eb569f096fd332be72",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/requirements.txt",
+    "source_sha256": "cdb17e1dccb588772ae3f2d06bfcef4dbef8687e98071b87d4e617f1510bf7d5",
+    "repo_sha256": "cdb17e1dccb588772ae3f2d06bfcef4dbef8687e98071b87d4e617f1510bf7d5",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/server.py",
+    "source_sha256": "4ccc98e2686ea2d16bd257c134b1a3915c02ff327cb738ed68cf127c0f4eca1a",
+    "repo_sha256": "4ccc98e2686ea2d16bd257c134b1a3915c02ff327cb738ed68cf127c0f4eca1a",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/shadow_ledger.py",
+    "source_sha256": "befccba409d3ef54f1b6e551aeea9a8dde7aed30589dea0a56f982692540801f",
+    "repo_sha256": "befccba409d3ef54f1b6e551aeea9a8dde7aed30589dea0a56f982692540801f",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/tests/test_shadow_ledger.py",
+    "source_sha256": "ae9d158a1b8d823bfb0910d824fd7c82009d51b4ecd3eb96d22a1a3886d7e4b7",
+    "repo_sha256": "ae9d158a1b8d823bfb0910d824fd7c82009d51b4ecd3eb96d22a1a3886d7e4b7",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/v641_rerun.py",
+    "source_sha256": "5421821f222c27b8553a75be1bf991baf5e3f28b11b7a1ee7c076e324272fd3c",
+    "repo_sha256": "5421821f222c27b8553a75be1bf991baf5e3f28b11b7a1ee7c076e324272fd3c",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/v64_rerun.py",
+    "source_sha256": "b275a0bde49c5ef9dbfca91c99a8a379dae84f0692fab29ac1294c0dfe283c73",
+    "repo_sha256": "b275a0bde49c5ef9dbfca91c99a8a379dae84f0692fab29ac1294c0dfe283c73",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/前向_候选跟踪.py",
+    "source_sha256": "604f963dca89879749e8c48746fb79da6873fee97dd3644c0601c484e76c729b",
+    "repo_sha256": "604f963dca89879749e8c48746fb79da6873fee97dd3644c0601c484e76c729b",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/前向_席位筛选.py",
+    "source_sha256": "ae3b121e7818dd500fac1095051d214eb31a7394d34a228c75d602993ce044d3",
+    "repo_sha256": "ae3b121e7818dd500fac1095051d214eb31a7394d34a228c75d602993ce044d3",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/启动数据服务.command",
+    "source_sha256": "5ccd2dae05060962ee69cfc978bbe192832f5185e706563e2858a24c0a1cc850",
+    "repo_sha256": "5ccd2dae05060962ee69cfc978bbe192832f5185e706563e2858a24c0a1cc850",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/失效判据.py",
+    "source_sha256": "11acda88a35356e2b9ba41bd20765e73800df1474117449148ea0f84d468b1ee",
+    "repo_sha256": "11acda88a35356e2b9ba41bd20765e73800df1474117449148ea0f84d468b1ee",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/对照ETF.py",
+    "source_sha256": "48f92ce127b4ac3618f81934b08692da7e577239b0939cf5bd36de29e421f953",
+    "repo_sha256": "48f92ce127b4ac3618f81934b08692da7e577239b0939cf5bd36de29e421f953",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/对照组.py",
+    "source_sha256": "1339e5d247ce05479f0c6e17c323da63aa91c019f19ea136f49208ef164bf130",
+    "repo_sha256": "1339e5d247ce05479f0c6e17c323da63aa91c019f19ea136f49208ef164bf130",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/对齐pandas版本.command",
+    "source_sha256": "7c247f8270b94d6489310f2ce7a1d640c388d621fab400673a4997cf4d10376b",
+    "repo_sha256": "7c247f8270b94d6489310f2ce7a1d640c388d621fab400673a4997cf4d10376b",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/尾盘信号.py",
+    "source_sha256": "725a3a9b1b9972e64b16eba952d19257163bb9ccf7bf421ab93a9eacbf59ac18",
+    "repo_sha256": "725a3a9b1b9972e64b16eba952d19257163bb9ccf7bf421ab93a9eacbf59ac18",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/席位性格研究.py",
+    "source_sha256": "da86b5c7d0370aa6f4b132540a149db9fb5bfe220d080e44d7cd0058deaa3aec",
+    "repo_sha256": "da86b5c7d0370aa6f4b132540a149db9fb5bfe220d080e44d7cd0058deaa3aec",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/底仓引擎.py",
+    "source_sha256": "f1b01205424ffff4d0999b0ae6d089923d2f57126557af3e2fd8c10fffd13f6d",
+    "repo_sha256": "f1b01205424ffff4d0999b0ae6d089923d2f57126557af3e2fd8c10fffd13f6d",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/影子交割.csv.test",
+    "source_sha256": "3450ec27f7dc2fece5f808b7bc1dd7171e97e6360494c6cfe0a389ef0eb768b1",
+    "repo_sha256": "3450ec27f7dc2fece5f808b7bc1dd7171e97e6360494c6cfe0a389ef0eb768b1",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/影子交割.csv.test.test",
+    "source_sha256": "ba86ff72e5e23839f24d007b5f6ba77d9aadf4701029232bf0d47c50ebc40b67",
+    "repo_sha256": "ba86ff72e5e23839f24d007b5f6ba77d9aadf4701029232bf0d47c50ebc40b67",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/影子交割.py",
+    "source_sha256": "2726109ad4dd835897cf8232b10255d7198a9a3a85037d07f6c43f9b17109553",
+    "repo_sha256": "2726109ad4dd835897cf8232b10255d7198a9a3a85037d07f6c43f9b17109553",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/情绪指数.py",
+    "source_sha256": "1d31fe7e539904bf2038c05c77c2f98c1cbbf867c90c6c49ff935341e73d9864",
+    "repo_sha256": "1d31fe7e539904bf2038c05c77c2f98c1cbbf867c90c6c49ff935341e73d9864",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/手动跑尾盘信号.command",
+    "source_sha256": "b8d8e5e1cfddc85bd0bed90bd58e88d90a7dc8912eb361b943cb71b3e1866970",
+    "repo_sha256": "b8d8e5e1cfddc85bd0bed90bd58e88d90a7dc8912eb361b943cb71b3e1866970",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/时点数据.py",
+    "source_sha256": "c7f68cb683ff91f62dcb4bf29841d1d91fdf49b55d93c231cc77ce73d90f20ee",
+    "repo_sha256": "c7f68cb683ff91f62dcb4bf29841d1d91fdf49b55d93c231cc77ce73d90f20ee",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/每日简报.py",
+    "source_sha256": "c9c4744d2887e6d4cb33af3d2a6159c6f8bf23164d846d2e1124175d87460b90",
+    "repo_sha256": "c9c4744d2887e6d4cb33af3d2a6159c6f8bf23164d846d2e1124175d87460b90",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/测试token.command",
+    "source_sha256": "b60d9064033631c2c35ec8b08b73da9561e453adaa884924608363a93ab48e72",
+    "repo_sha256": "b60d9064033631c2c35ec8b08b73da9561e453adaa884924608363a93ab48e72",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/盘后刷新数据.command",
+    "source_sha256": "1649f8374a3962b9510fe73b1bf3dfcc60e6f1dded7d42a03b49aa843cfd4244",
+    "repo_sha256": "1649f8374a3962b9510fe73b1bf3dfcc60e6f1dded7d42a03b49aa843cfd4244",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/研究_估值梯.py",
+    "source_sha256": "61a4dba47919ad5c9fd1e4c6c2e7fc655dabacbfd38c8faa7a7c45532521fc1a",
+    "repo_sha256": "61a4dba47919ad5c9fd1e4c6c2e7fc655dabacbfd38c8faa7a7c45532521fc1a",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/研究_协议回放.py",
+    "source_sha256": "69701a4c27b5a3c1f3a6d399fc33d318b0c602d5b1746e7ec095dd49b0ea43f4",
+    "repo_sha256": "69701a4c27b5a3c1f3a6d399fc33d318b0c602d5b1746e7ec095dd49b0ea43f4",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/研究_回撤补仓梯.py",
+    "source_sha256": "7fc04f65835708c40eb970d5650e9bfd5c4e6aae277f9727484a7ae4f5a8f6d5",
+    "repo_sha256": "7fc04f65835708c40eb970d5650e9bfd5c4e6aae277f9727484a7ae4f5a8f6d5",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/研究_指数事件库.py",
+    "source_sha256": "685dd2f22b6fd61bb26696995fd15b90318c761768f437bb2b699616ea4b69df",
+    "repo_sha256": "685dd2f22b6fd61bb26696995fd15b90318c761768f437bb2b699616ea4b69df",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/研究_政策点名.py",
+    "source_sha256": "e6976bd4218ebeaa69bf9a4745cdabafd701fd5b24ccb049e30a72af188da3ad",
+    "repo_sha256": "e6976bd4218ebeaa69bf9a4745cdabafd701fd5b24ccb049e30a72af188da3ad",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/研究_次新收集.py",
+    "source_sha256": "0e06f192e0a48cc2abe54456dd089aeda19809401781e325a6da7ec8aa76f427",
+    "repo_sha256": "0e06f192e0a48cc2abe54456dd089aeda19809401781e325a6da7ec8aa76f427",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/研究_次新策略.py",
+    "source_sha256": "fef90e534303a8ccb1b78cbbf57b1bc4e1fca225f492ae2abe631df0634813f4",
+    "repo_sha256": "fef90e534303a8ccb1b78cbbf57b1bc4e1fca225f492ae2abe631df0634813f4",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/研究_红利策略.py",
+    "source_sha256": "60595b656d1994b70309681c82a1bad645a1e8a22a662fb6ac672f617104fa5f",
+    "repo_sha256": "60595b656d1994b70309681c82a1bad645a1e8a22a662fb6ac672f617104fa5f",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/研究_高股息.py",
+    "source_sha256": "598837b8f381858b72fec597b8e93facd7a81c3317b0c052e9402c7779604eb6",
+    "repo_sha256": "598837b8f381858b72fec597b8e93facd7a81c3317b0c052e9402c7779604eb6",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/策略规格.py",
+    "source_sha256": "abf2cfddd7ef5b3b8098becfe44d9c8a0b28d73b62d6454c41909c21c3affc83",
+    "repo_sha256": "abf2cfddd7ef5b3b8098becfe44d9c8a0b28d73b62d6454c41909c21c3affc83",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/设置尾盘信号.command",
+    "source_sha256": "7693c6f6299fb4cf54da58c9f2a7be99222f9c58fba08140633cba228dfde2b8",
+    "repo_sha256": "7693c6f6299fb4cf54da58c9f2a7be99222f9c58fba08140633cba228dfde2b8",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/设置每天自动刷新.command",
+    "source_sha256": "209cc0716390e08fb8f26d972d1f52d71fea03a0a2da76cb27996b7659379121",
+    "repo_sha256": "209cc0716390e08fb8f26d972d1f52d71fea03a0a2da76cb27996b7659379121",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/跑回测.command",
+    "source_sha256": "9273d2db24888038c60f390fb5139106c5ae2df0d3585e7cbb1a40fb43c0fdc3",
+    "repo_sha256": "9273d2db24888038c60f390fb5139106c5ae2df0d3585e7cbb1a40fb43c0fdc3",
+    "changed_from_source": false
+  },
+  {
+    "path": "数据助手/龙虎榜拉取.py",
+    "source_sha256": "ab39e3e760df1795f0ef72b81af898a46df0120bec044e20170d2a44d594e5e9",
+    "repo_sha256": "ab39e3e760df1795f0ef72b81af898a46df0120bec044e20170d2a44d594e5e9",
+    "changed_from_source": false
+  }
+]

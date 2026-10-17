@@ -1,13 +1,64 @@
-.venv/
-__pycache__/
-*.pkl
-*.log
-*.csv
+# Local credentials and configuration
+.env
+.env.*
+!.env.example
 config.py
+*secrets*.json
+*.pem
+*.key
 token测试结果.txt
-.DS_Store
-.base_last_weight.json
-.shadow_state.json.bak
-.shadow_state.json*
+
+# Runtime, market data, personal/browser records and caches
+data.js
+*.csv
 *.jsonl
-.shadow_commit_pending.json
+*.pkl
+*.parquet
+*.sqlite*
+*.db
+*.log
+*.bak
+*.zip
+*.tar*
+*.bundle
+.shadow*
+.base_last_weight.json
+.sw_l2_to_l1.json
+.pit_cache*
+*localStorage*
+*localstorage*
+*浏览器导出*
+*持仓导出*
+*交割记录*
+runtime/
+logs/
+private/
+local/
+
+# Personal financial plans stay at the authoritative local source
+/01_策略文档/个人再入场协议-预注册-2026-07-19.md
+/01_策略文档/浅水线-立项草案v2-2026-09-23.md
+/01_策略文档/美股-结构优先方案-草案-2026-09-23.md
+
+# Environment and OS files
+.DS_Store
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.py[cod]
+.agents/
+
+# Third-party raw media, transcripts, and generated machine exports stay local
+/04_原始研究材料/**/*.png
+/04_原始研究材料/**/*.jpg
+/04_原始研究材料/**/*.mp4
+/04_原始研究材料/**/*.srt
+/04_原始研究材料/**/*.json
+
+# Additional personal documents excluded by the source review
+/01_策略文档/A股吸筹追踪策略-正式档案-v1.0-20260706.md
+/01_策略文档/研究纪要-2026-07-19晚.md
+/04_原始研究材料/国都证券能力核查_2026-09-23.md
+/04_原始研究材料/浅水塘调研_2026-09-23/
+/04_原始研究材料/美股调研_2026-09-23/

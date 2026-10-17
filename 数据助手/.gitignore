@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pkl
+*.log
+*.csv
+config.py
+token测试结果.txt
+.DS_Store
+.base_last_weight.json
+.shadow_state.json.bak
+.shadow_state.json*
+*.jsonl
+.shadow_commit_pending.json
